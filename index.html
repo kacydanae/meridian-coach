@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>MERIDIAN — BUILD</title>
+<link rel="manifest" href="./manifest.webmanifest" />
+<meta name="theme-color" content="#1b1613" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="MERIDIAN" />
+<link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+<link rel="icon" href="./icon-192.png" />
+<style>
+:root{ color-scheme: light;
+  --ink:#1b1613; --ink2:#5f564b; --ink3:#8c8175;
+  --paper:#faf6ee; --paper2:#ece3d3; --card:#fbf8f1;
+  --line:#d8ccb5; --line2:#c6b89c;
+  --accent:#7c3a2d; --gold:#a9843e; --live:#6f9a4e;
+  --display:'Lato Black','Lato','Helvetica Neue',Arial,system-ui,sans-serif;
+  --body:'Caladea',Georgia,'Times New Roman',serif;
+}
+*{box-sizing:border-box;} html,body{height:100%;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);}
+.lab{font-family:var(--display);font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);}
+.wrap{max-width:1080px;margin:0 auto;padding:14px 16px 60px;}
+h1{font-family:var(--display);font-weight:900;letter-spacing:-.02em;font-size:23px;margin:4px 0 2px;color:#2a2118;}
+.meridian{display:flex;align-items:center;margin:10px 0 2px;}
+.meridian .seg{height:2px;background:var(--ink);flex:0 0 46px;}
+.meridian .mark{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);margin:0 8px;}
+.meridian .thin{height:1px;background:var(--line2);flex:1;}
+.screen{display:none;} .screen.on{display:block;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:13px 14px;margin-top:12px;}
+.card .clab{display:flex;align-items:center;gap:7px;font-family:var(--display);font-weight:700;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);}
+.card .clab .ico{font-size:13px;color:var(--accent);}
+.tap{cursor:pointer;transition:transform .08s, box-shadow .08s;}
+.tap:active{transform:scale(.985);}
+button{font-family:var(--display);font-weight:700;font-size:11px;letter-spacing:.05em;text-transform:uppercase;border-radius:5px;padding:10px 14px;cursor:pointer;border:0;}
+.btn{background:var(--accent);color:#fff;} .btn:hover{background:#8f4536;}
+.btn2{background:none;border:1px solid var(--line2);color:var(--accent);} .btn2:hover{border-color:var(--accent);}
+.btn:disabled,.btn2:disabled{opacity:.5;cursor:wait;}
+input,textarea{font-family:var(--body);font-size:15px;color:var(--ink);background:#fffdf8;border:1px solid var(--line2);border-radius:6px;padding:10px 12px;width:100%;}
+input:focus,textarea:focus{outline:none;border-color:var(--accent);}
+.muted{color:var(--ink3);font-style:italic;}
+.small{font-size:12.5px;line-height:1.5;color:var(--ink2);}
+.err{color:var(--accent);font-size:13px;margin-top:8px;}
+#login{max-width:380px;margin:8vh auto 0;padding:0 20px;}
+#login .field{margin-top:10px;}
+#login button{width:100%;margin-top:12px;}
+.trigitem{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 2px;border-top:1px solid var(--line);}
+.trigitem:first-of-type{border-top:0;}
+.trigitem .g{font-size:14px;color:var(--gold);letter-spacing:1px;}
+.trigitem .who{font-family:var(--display);font-weight:900;font-size:12.5px;}
+.trigitem .what{font-size:13px;color:var(--ink2);}
+.trigitem .when{font-family:var(--display);font-weight:700;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);text-align:right;}
+.trigitem .when.now{color:#fff;background:var(--accent);padding:3px 8px;border-radius:3px;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.chiprow{display:flex;flex-wrap:wrap;gap:8px;margin:3px 0 4px;}
+.seclab{font-family:var(--display);font-weight:900;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin:12px 0 3px;}
+.seclab span{color:var(--accent);margin-left:4px;}
+.scopebar{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 4px;}
+.segbtn{font-family:var(--display);font-weight:700;font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);background:var(--paper2);border:1px solid var(--line2);border-radius:99px;padding:7px 12px;cursor:pointer;}
+.segbtn.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.chip{background:var(--card);color:var(--ink2);border:1px solid var(--line);border-radius:13px;padding:11px 14px;cursor:pointer;flex:1 1 140px;min-width:140px;}
+.chip .nm{font-family:var(--display);font-weight:900;font-size:14px;color:var(--ink);}
+.chip .sig{font-family:var(--display);font-weight:700;font-size:8.5px;letter-spacing:.05em;color:var(--gold);text-transform:uppercase;margin-top:3px;}
+.chip .fire{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-family:var(--display);font-weight:700;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--accent);padding:2px 7px;border-radius:2px;}
+.chip.pend{opacity:.6;}
+.collrow{display:flex;gap:8px;align-items:baseline;padding:5px 0;font-size:13.5px;color:var(--ink2);}
+.collrow .g{color:var(--gold);font-size:13px;}
+.vocchip{display:inline-block;font-family:var(--display);font-weight:700;font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;padding:4px 9px;border-radius:3px;background:var(--paper2);border:1px solid var(--line2);color:var(--ink2);margin-top:6px;}
+.vocchip.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+.energy{font-size:14px;line-height:1.6;color:var(--ink2);}
+.energy b{color:var(--ink);font-family:var(--display);font-size:12px;letter-spacing:.04em;}
+.chead{background:var(--ink);color:#efe7d8;border-radius:9px;padding:15px 16px;margin-top:12px;}
+.chead .nm{font-family:var(--display);font-weight:900;font-size:21px;color:#fff;}
+.chead .sig{font-family:var(--display);font-weight:700;font-size:9.5px;letter-spacing:.06em;color:var(--gold);text-transform:uppercase;margin-top:3px;}
+.chead .loc{font-size:12px;color:#cbbfa9;font-style:italic;margin-top:5px;}
+.back{font-family:var(--display);font-weight:700;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);cursor:pointer;background:none;border:0;padding:6px 0;}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin-top:11px;padding-bottom:2px;-webkit-overflow-scrolling:touch;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex:0 0 auto;font-family:var(--display);font-weight:700;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2);background:var(--paper2);border:1px solid var(--line2);border-radius:99px;padding:8px 13px;cursor:pointer;}
+.tab.on{background:var(--ink);border-color:var(--ink);color:#fff;}
+.retv{font-family:var(--display);font-weight:900;font-size:19px;margin-top:7px;}
+.retv .gl{color:var(--accent);}
+.baserow{display:grid;grid-template-columns:108px 1fr;gap:8px;padding:8px 0;border-top:1px solid var(--line);font-size:13.5px;}
+.baserow:first-of-type{border-top:0;}
+.baserow .bl{font-family:var(--display);font-weight:700;font-size:8.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);padding-top:2px;}
+.baserow .bv b{font-family:var(--display);font-weight:900;}
+.baserow .bv .mut{color:var(--ink3);font-style:italic;font-size:12px;}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px;}
+.placerow{display:grid;grid-template-columns:30px 1fr auto;gap:9px;align-items:center;padding:9px 2px;border-top:1px solid var(--line);cursor:pointer;}
+.placerow:first-of-type{border-top:0;}
+.placerow .g{font-size:15px;color:var(--accent);}
+.placerow .pn{font-family:var(--display);font-weight:700;font-size:12.5px;}
+.placerow .pv{font-size:13px;color:var(--ink2);text-align:right;}
+.mt{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 2px;border-top:1px solid var(--line);cursor:pointer;}
+.mt:first-of-type{border-top:0;}
+.mt .g{font-size:13px;color:var(--accent);letter-spacing:1px;}
+.mt .nm{font-family:var(--display);font-weight:700;font-size:12.5px;line-height:1.2;}
+.mt .nx{font-size:10.5px;color:var(--ink3);font-style:italic;margin-top:1px;}
+.mt.firing .nm{color:var(--accent);}
+.ti{display:flex;gap:2px;} .ti i{width:5px;height:12px;background:var(--line2);} .ti i.on{background:var(--accent);}
+.tl{margin-top:10px;}
+.tl .tlhead{display:flex;justify-content:space-between;margin-bottom:6px;}
+.tl .tllab{font-family:var(--display);font-weight:700;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);}
+.track{position:relative;height:28px;background:var(--paper2);border-radius:3px;overflow:hidden;}
+.track .window{position:absolute;inset:0;background:rgba(124,58,45,.14);}
+.track .hit{position:absolute;top:0;bottom:0;width:2px;background:var(--accent);}
+.track .hit.today{width:3px;background:#fff;box-shadow:0 0 0 2px var(--accent);}
+.track .todaymark{position:absolute;top:0;bottom:0;border-left:2px dashed var(--live);}
+.tl .dates{display:flex;justify-content:space-between;margin-top:5px;}
+.tl .dates span{font-family:var(--display);font-weight:700;font-size:8.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);}
+.tl .hits{font-size:11.5px;color:var(--ink2);margin-top:6px;line-height:1.6;}
+.tl .hits b{font-family:var(--display);font-weight:700;font-size:10.5px;}
+.tl .hits .now{color:var(--accent);}
+.readout{margin-top:11px;background:var(--card);border:1px solid var(--line2);border-left:3px solid var(--gold);border-radius:6px;padding:13px 15px;font-size:13.5px;line-height:1.65;color:var(--ink2);}
+.readout p{margin:0 0 9px;} .readout p:last-child{margin:0;} .readout b{color:var(--ink);}
+.chatlog{display:flex;flex-direction:column;gap:9px;padding:4px 0 10px;min-height:120px;max-height:52vh;overflow-y:auto;}
+.msg{display:flex;} .msg.user{justify-content:flex-end;}
+.msg .bub{max-width:86%;padding:9px 12px;border-radius:11px;font-size:14px;line-height:1.55;}
+.msg.user .bub{background:var(--ink);color:#efe7d8;border-bottom-right-radius:3px;}
+.msg.assistant .bub{background:var(--card);border:1px solid var(--line);color:var(--ink2);border-bottom-left-radius:3px;}
+.msg.assistant .bub p{margin:0 0 8px;} .msg.assistant .bub p:last-child{margin:0;} .msg.assistant .bub b{color:var(--ink);}
+.chatbar{display:flex;gap:8px;align-items:flex-end;border-top:1px solid var(--line);padding-top:10px;}
+.chatbar textarea{min-height:44px;resize:vertical;}
+.saved{font-family:var(--display);font-weight:700;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--live);margin-left:8px;opacity:0;transition:opacity .2s;}
+.saved.on{opacity:1;}
+.auto{margin-top:11px;padding-top:10px;border-top:1px solid var(--line);}
+.auto .al{font-family:var(--display);font-weight:700;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--live);}
+.auto .at{font-size:13px;color:var(--ink2);line-height:1.55;margin-top:4px;white-space:pre-wrap;}
+.bizrow{display:grid;grid-template-columns:128px 1fr auto;gap:8px;align-items:start;padding:7px 0;border-top:1px solid var(--line);}
+.bizrow:first-of-type{border-top:0;}
+.bizrow input,.bizrow textarea{font-size:13.5px;padding:7px 9px;}
+.bizrow .bl-in{font-family:var(--display);font-weight:700;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink2);background:var(--paper2);}
+.bizrow textarea{resize:none;overflow:hidden;min-height:34px;}
+.bizmv{display:flex;flex-direction:column;gap:2px;}
+.mv{background:none;border:1px solid var(--line);border-radius:3px;color:var(--ink3);font-size:9px;padding:2px 6px;cursor:pointer;}
+.mv:hover{color:var(--accent);border-color:var(--accent);}
+.linkchip{display:inline-flex;align-items:center;gap:6px;background:var(--paper2);border:1px solid var(--line2);border-radius:99px;padding:6px 6px 6px 13px;margin:0 8px 8px 0;}
+.linkchip a{font-family:var(--display);font-weight:700;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);text-decoration:none;}
+.overlay{position:fixed;inset:0;background:rgba(27,22,19,.55);display:none;z-index:50;padding:20px 12px;overflow-y:auto;}
+.overlay.show{display:block;}
+.sheet{max-width:760px;margin:0 auto;background:var(--paper);border:1px solid var(--line2);border-radius:10px;box-shadow:0 40px 90px -30px rgba(0,0,0,.6);overflow:hidden;}
+.sheet-top{background:var(--ink);color:#efe7d8;padding:15px 18px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.sheet-top .who{font-family:var(--display);font-weight:700;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);}
+.sheet-top h2{font-family:var(--display);font-weight:900;font-size:19px;letter-spacing:-.01em;margin:4px 0 0;color:#fff;}
+.sheet-top .sub{font-size:12.5px;color:#cbbfa9;font-style:italic;margin-top:4px;}
+.closex{font-family:var(--display);font-weight:900;font-size:20px;color:#8a7c68;cursor:pointer;background:none;border:0;flex:0 0 auto;}
+.sheet-body{padding:16px 18px 22px;}
+.georow{padding:10px 8px;border:1px solid var(--line);border-radius:6px;margin-top:8px;cursor:pointer;font-size:14px;background:var(--card);}
+.georow:hover{border-color:var(--accent);}
+.georow .mut{color:var(--ink3);font-size:12px;}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--ink);color:#efe7d8;font-family:var(--display);font-weight:700;font-size:11px;letter-spacing:.05em;padding:11px 18px;border-radius:7px;z-index:99;display:none;}
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+.stat{background:var(--paper2);border:1px solid var(--line2);border-radius:6px;padding:10px;}
+.stat .sv{font-family:var(--display);font-weight:900;font-size:13px;}
+.gear{position:absolute;top:0;right:0;background:none;border:0;font-size:17px;cursor:pointer;color:var(--ink3);padding:8px;}
+.topbar{position:relative;}
+@media(min-width:760px){ .chips .chip{flex:1 1 200px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="login" class="screen">
+    <div class="lab">MERIDIAN · BUILD · Private</div>
+    <h1>Coach sign-in</h1>
+    <div class="meridian"><span class="seg"></span><span class="mark"></span><span class="thin"></span></div>
+    <div class="field"><input id="lemail" type="email" autocomplete="username" value="kacydanae@gmail.com" /></div>
+    <div class="field"><input id="lpass" type="password" autocomplete="current-password" placeholder="Password" /></div>
+    <button class="btn" id="signin">Enter the mastermind</button>
+    <button class="btn2" id="sendcode" style="width:100%;margin-top:8px;">Email me a code instead</button>
+    <div id="codewrap" style="display:none;margin-top:8px;">
+      <input id="lcode" inputmode="numeric" placeholder="6-digit code from the email" />
+      <button class="btn" id="verifycode" style="width:100%;margin-top:8px;">Verify code</button>
+    </div>
+    <div class="err" id="lerr"></div>
+  </div>
+  <div id="home" class="screen">
+    <div class="topbar">
+      <div class="lab">BUILD Mastermind · Coach</div>
+      <h1>The pulse, today</h1>
+      <button class="gear" onclick="openSettings()">⚙︎</button>
+    </div>
+    <div class="meridian"><span class="seg"></span><span class="mark"></span><span class="thin"></span></div>
+    <div class="lab" id="dateline" style="margin-top:6px;color:var(--ink2);"></div>
+    <div class="card">
+      <div class="clab"><span class="ico">◈</span> Triggered — this week's exact hits</div>
+      <div id="trig"><div class="muted small" style="padding:6px 0;">Loading…</div></div>
+    </div>
+    <div class="card">
+      <div class="clab"><span class="ico">☽</span> The collective sky</div>
+      <div id="coll"><div class="muted small" style="padding:6px 0;">Reading the sky…</div></div>
+    </div>
+    <div class="card">
+      <div class="clab"><span class="ico">✦</span> Today's energy</div>
+      <div id="energy" class="energy" style="margin-top:8px;"><span class="muted small">…</span></div>
+    </div>
+    <div class="card">
+      <div class="clab"><span class="ico">✶</span> Your people</div>
+      <div class="scopebar" id="scopebar"></div>
+      <div class="chips" id="chips"></div>
+    </div>
+  </div>
+  <div id="client" class="screen">
+    <button class="back" onclick="showHome()">← All clients</button>
+    <div class="chead" id="chead"></div>
+    <div class="tabs" id="tabs"></div>
+    <div id="tabbody"></div>
+  </div>
+</div>
+<div class="overlay" id="overlay"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+const SB_URL = "https://fntfezosfcjaumfbueut.supabase.co";
+const ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZudGZlem9zZmNqYXVtZmJ1ZXV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwNDY2ODgsImV4cCI6MjA5NjYyMjY4OH0.-ZaJRN_i1p2dF9xiKF3LMckQFCzgOz7GgW_HnWxJXNM";
+const FN = SB_URL + "/functions/v1/coach-api";
+const sb = createClient(SB_URL, ANON);
+window.sb = sb;
+const glyph={sun:'☉',moon:'☾',mercury:'☿',venus:'♀',mars:'♂',jupiter:'♃',saturn:'♄',uranus:'♅',neptune:'♆',pluto:'♇',chiron:'⚷',mean_node:'☊',north_node:'☊',lilith:'⚸',true_lilith:'⚸',conjunction:'☌',sextile:'⚹',square:'□',trine:'△',opposition:'☍',ascendant:'AC',midheaven:'MC',ic:'IC',descendant:'DC'};
+const SIGNGL={Aries:'♈',Taurus:'♉',Gemini:'♊',Cancer:'♋',Leo:'♌',Virgo:'♍',Libra:'♎',Scorpio:'♏',Sagittarius:'♐',Capricorn:'♑',Aquarius:'♒',Pisces:'♓'};
+const SIGNS=["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
+const HMs={1:"self / brand",2:"money / worth",3:"voice / message",4:"foundations",5:"creative offers",6:"systems",7:"clients",8:"depth / investment",9:"teaching / scale",10:"authority / visibility",11:"audience / community",12:"the unseen / rest"};
+const RUL={Aries:'mars',Taurus:'venus',Gemini:'mercury',Cancer:'moon',Leo:'sun',Virgo:'mercury',Libra:'venus',Scorpio:'pluto',Sagittarius:'jupiter',Capricorn:'saturn',Aquarius:'uranus',Pisces:'neptune'};
+let SKYPOS=null;
+function houseOfLonJS(lon,houses){const abs=houses.map(h=>SIGNS.indexOf(h.sign)*30+(h.deg||0));for(let i=0;i<12;i++){const a=abs[i],b=abs[(i+1)%12];if(((lon-a+360)%360)<((b-a+360)%360))return i+1;}return 12;}
+const fmtD=s=>{const d=D(s);return d?d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'}):'—';};
+function progActive(c){
+  const n=J(c.natal_json);const pp=(c.progressions_json||{}).points;if(!n||!pp)return[];
+  const abs=p=>{const i=SIGNS.indexOf(p.sign);return(i<0?0:i*30)+(parseFloat(p.deg)||0);};
+  const nat={};Object.entries(n.planets).forEach(([k,p])=>{if(k!=='ascendant'&&k!=='midheaven')nat[k]=abs(p);});
+  nat.ascendant=abs(n.asc);nat.midheaven=abs(n.mc);
+  const A={conjunction:0,sextile:60,square:90,trine:120,opposition:180};const out=[];
+  ['sun','moon','mercury','venus','mars'].forEach(k=>{const P=pp[k];if(!P||P.abs_pos==null)return;
+    Object.entries(nat).forEach(([nk,nl])=>{let d=Math.abs(P.abs_pos-nl)%360;if(d>180)d=360-d;
+      Object.entries(A).forEach(([an,ang])=>{const orb=Math.abs(d-ang);if(orb<=1.5)out.push({p:k,aspect:an,point:nk,orb:+orb.toFixed(2)});});});});
+  return out.sort((a,b)=>a.orb-b.orb);
+}
+const cap=s=>(s||'').charAt(0).toUpperCase()+(s||'').slice(1);
+const ord=n=>n+(['th','st','nd','rd'][(n%100>>3^1&&n%10)||0]||'th');
+const pl=s=>cap((s||'').replace(/_/g,' '));
+const ptGl=p=>glyph[p]||(p||'').toUpperCase().slice(0,2);
+const ptName=p=>({ascendant:'Ascendant',midheaven:'Midheaven',ic:'IC',descendant:'Descendant',mean_node:'North Node',north_node:'North Node'}[p]||pl(p));
+const D=s=>{const a=(s||'').split('-');return a.length===3?new Date(+a[0],+a[1]-1,+a[2]):null;};
+const fmt=d=>d?d.toLocaleDateString('en-US',{month:'short',day:'numeric'}):'%';
+const esc=s=>(s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function mdHtml(t){let h=esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/^(HOOK|READ|BUSINESS LENS|JOURNAL|THE SKY|FOR GOOD|NOT FOR):/gm,'<b>$1:</b>').replace(/^\s*[-•]\s+(.*)$/gm,'• $1');return '<p>'+h.replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>')+'</p>';}
+const TODAY=new Date(); const todayISO=new Date(TODAY.getTime()-TODAY.getTimezoneOffset()*60000).toISOString().slice(0,10);
+const within=(x,y,days)=>x&&y&&Math.abs((x-y)/864e5)<=days;
+const ticks=n=>Array.from({length:5},(_,i)=>`<i class="${i<(n||0)?'on':''}"></i>`).join('');
+const toast=m=>{const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2400);};
+const J=v=>{if(v==null)return null;if(typeof v==='object')return v;try{return JSON.parse(v);}catch(e){return null;}};
+let DATA=[]; let CUR=null; let SESSION=null;
+async function api(action, payload={}){
+  const tok = SESSION?.access_token;
+  const r = await fetch(FN, {method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+tok}, body: JSON.stringify({action, ...payload})});
+  return await r.json();
+}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');}
+document.getElementById('signin').onclick=async()=>{
+  const e=document.getElementById('lemail').value.trim(), p=document.getElementById('lpass').value;
+  const {error}=await sb.auth.signInWithPassword({email:e,password:p});
+  if(error){document.getElementById('lerr').textContent=error.message;return;}
+};
+document.getElementById('sendcode').onclick=async()=>{
+  const e=document.getElementById('lemail').value.trim();
+  const {error}=await sb.auth.signInWithOtp({email:e,options:{shouldCreateUser:false}});
+  if(error){document.getElementById('lerr').textContent=error.message;return;}
+  document.getElementById('codewrap').style.display='block';
+  document.getElementById('lerr').textContent='';
+  toast('Code sent — check your email');
+};
+document.getElementById('verifycode').onclick=async()=>{
+  const e=document.getElementById('lemail').value.trim(), c=document.getElementById('lcode').value.trim();
+  const {error}=await sb.auth.verifyOtp({email:e,token:c,type:'email'});
+  if(error)document.getElementById('lerr').textContent=error.message;
+};
+sb.auth.onAuthStateChange((_ev,session)=>{
+  SESSION=session;
+  if(session){ boot(); } else { show('login'); }
+});
+let BOOTED=false;
+async function boot(){
+  if(BOOTED){show('home');return;} BOOTED=true;
+  show('home');
+  document.getElementById('dateline').textContent=TODAY.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}).toUpperCase();
+  const {data,error}=await sb.from('private_clients').select('*').order('name');
+  if(error){toast('Load failed: '+error.message);return;}
+  DATA=data||[];
+  renderTrig(); renderScope(); renderChips();
+  loadCollective(); loadEnergy();
+  if(navigator.serviceWorker) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+}
+function sigLine(c){const n=J(c.natal_json);if(!n||!n.planets)return 'Awaiting chart';
+  return `${n.planets.sun?.sign||''} ☉ · ${n.planets.moon?.sign||''} ☾ · ${n.asc?.sign||''} ↑`;}
+function weekHits(){
+  const out=[];
+  DATA.forEach((c,ci)=>{(J(c.long_term_transits_json)||[]).forEach(t=>{(t.hits||[]).forEach(h=>{
+    const d=D(h); if(!d)return; const days=Math.round((d-D(todayISO))/864e5);
+    if(days>=-1&&days<=7) out.push({ci,c,t,h,days});
+  });});});
+  out.sort((a,b)=>Math.abs(a.days)-Math.abs(b.days)||(b.t.intensity||0)-(a.t.intensity||0));
+  return out;
+}
+function renderTrig(){
+  const rows=[];
+  weekHits().forEach(x=>rows.push({ci:x.ci,name:x.c.name,label:x.t.label,tk:x.t.planet+'|'+x.t.aspect+'|'+x.t.point,days:x.days,kind:'exact',inten:x.t.intensity||0}));
+  DATA.forEach((c,ci)=>{(J(c.daily_triggered_json)?.triggers||[]).forEach(g=>{
+    const d=D(g.date);if(!d)return;const days=Math.round((d-D(todayISO))/864e5);
+    if(days<0||days>7)return;
+    rows.push({ci,name:c.name,label:g.label,tk:g.tkey,days,kind:'trigger',fast:g.fast,fasp:g.aspect,inten:g.intensity||0});
+  });});
+  rows.sort((a,b)=>Math.abs(a.days)-Math.abs(b.days)||(a.kind==='exact'?-1:1)||(b.inten-a.inten));
+  document.getElementById('trig').innerHTML = rows.length? rows.slice(0,18).map(x=>{
+    const when=x.days===0?(x.kind==='exact'?'exact today':'today'):x.days>0?('in '+x.days+'d'):'yesterday';
+    const badge=x.kind==='exact'?when:('⚡ '+(glyph[x.fast]||'')+' '+when);
+    return `<div class="trigitem tap" data-ci="${x.ci}" data-tk="${x.tk}">
+      <span class="g">${x.kind==='exact'?'◈':'⚡'}</span>
+      <div><div class="who">${esc(x.name)}</div><div class="what">${esc(x.label)}${x.kind==='trigger'?' <span class="muted" style="font-size:11px;">· trigger: '+pl(x.fast)+' '+(glyph[x.fasp]||x.fasp)+'</span>':''}</div></div>
+      <span class="when ${x.days===0?'now':''}">%{badge}</span></div>`;
+  }).join('') : '<div class="muted small" style="padding:6px 0;">No exact hits or trigger days this week. The board is quiet.</div>';
+}
+let SCOPE='work_family';
+const SCOPES=[['work_family','Work + Family'],['work','Just work'],['family','Just family'],['me','Just me']];
+function ageFromISO(b){if(!b)return null;const d=D(b);if(!d)return null;let a=TODAY.getFullYear()-d.getFullYear();const m=TODAY.getMonth()-d.getMonth();if(m<0||(m===0&&TODAY.getDate()<d.getDate()))a--;return a;}
+function minorBand(a){return a==null?null:a<13?'child (0–12)':a<18?'teen (13–17)':null;}
+function inScope(c){const s=c.section||'build';return SCOPE==='work_family'?(s==='build'||s==='family'):SCOPE==='work'?s==='build':SCOPE==='family'?s==='family':SCOPE==='me'?s==='me':true;}
+window.setScope=(s)=>{SCOPE=s;renderScope();renderChips();};
+function renderScope(){const el=document.getElementById('scopebar');if(!el)return;el.innerHTML=SCOPES.map(([k,l])=>`<button class="segbtn ${SCOPE===k?'on':''}" onclick="setScope('${k}')">${l}</button>`).join('');}
+function renderChips(){
+  const order=['me','family','build'], titles={me:'My Chart',family:'Family',build:'BUILD'}, groups={};
+  DATA.forEach((c,i)=>{ if(!inScope(c))return; const s=c.section||'build'; (groups[s]=groups[s]||[]).push({c,i}); });
+  let html='';
+  order.forEach(s=>{ if(!groups[s])return;
+    html+=`<div class="seclab">${titles[s]||esc(s)}<span>${groups[s].length}</span></div><div class="chiprow">`;
+    html+=groups[s].map(({c,i})=>{
+      const cast=!!J(c.natal_json);
+      const fires=(J(c.long_term_transits_json)||[]).filter(t=>(t.hits||[]).some(h=>within(D(h),D(todayISO),0)));
+      const band=(c.section==='family')?minorBand(ageFromISO(c.birth_date)):null;
+      return `<div class="chip ${cast?'':'pend'}" data-open="${i}">
+        <div class="nm">${esc(c.name)}</div><div class="sig">${sigLine(c)}</div>
+        ${band?`<span class="fire" style="background:var(--gold)">● ${band}</span>`:''}
+        ${fires.length?`<span class="fire">● ${fires.length} exact today</span>`:''}</div>`;
+    }).join('');
+    html+='</div>';
+  });
+  document.getElementById('chips').innerHTML = html || '<div class="muted small" style="padding:4px 0;">No one in this view.</div>';
+}
+async function loadCollective(){
+  const r=await api('collective');
+  const coll=r.collective; if(!coll){document.getElementById('coll').innerHTML='<div class="muted small">Sky unavailable.</div>';return;}
+  SKYPOS=coll.positions||SKYPOS;
+  const m=coll.moon||{}; const voc=coll.void_of_course;
+  const vt=t=>t?new Date(t).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):'%';
+  const vd=t=>t?new Date(t).toLocaleDateString('en-US',{weekday:'short'}):'%';
+  let h=`<div class="collrow"><span class="g">${SIGNGL[m.sign]||'☽'}</span> Moon in <b>&nbsp;${m.sign||'—'}</b>&nbsp;· ${m.phase||''}${m.ingress_utc?` · enters ${m.next_sign} ${vd(m.ingress_utc)} ${vt(m.ingress_utc)}`:''}</div>`;
+  if(voc) h+=`<span class="vocchip ${voc.active_now?'on':''}">${voc.active_now?'VOID-OF-COURSE NOW':'Void-of-course'} ${vd(voc.start_utc)} ${vt(voc.start_utc)} – ${vt(voc.end_utc)} · after ${esc(voc.last_aspect)}</span>`;
+  h+=(coll.aspects||[]).slice(0,6).map(a=>`<div class="collrow"><span class="g">${glyph[a.a]||''}${glyph[a.aspect]||''}${glyph[a.b]||''}</span> ${esc(a.label)} <span class="muted" style="font-size:11px;">${a.orb}°</span></div>`).join('');
+  document.getElementById('coll').innerHTML=h;
+}
+async function loadEnergy(){
+  const r=await api('today_energy');
+  const el=document.getElementById('energy');
+  if(r.need_key){el.innerHTML=`<span class="muted small">AI reads are off until your Anthropic key is in. </span><button class="btn2" style="margin-top:8px;" onclick="openSettings()">Open Settings</button>`;return;}
+  if(r.error){el.innerHTML='<span class="muted small">'+esc(r.error)+'</span>';return;}
+  el.innerHTML=mdHtml(r.content);
+}
+let TAB='returns';
+window.openClientI=(i)=>{CUR=DATA[i];TAB='returns';renderClient();show('client');window.scrollTo(0,0);};
+window.showHome=()=>{renderTrig();renderScope();renderChips();show('home');};
+function renderClient(){
+  const c=CUR;
+  document.getElementById('chead').innerHTML=`<div class="nm">${esc(c.name)}</div><div class="sig">${sigLine(c)}</div>
+    <div class="loc">${esc(c.current_location||'No current city on file — returns cast at birthplace')}${c.build_stage?' · '+esc(c.build_stage):''}</div>`;
+  const tabs=[['returns','Returns'],['chart','Birth Chart'],['transits','Transits'],['prog','Progressions'],['chat','Ask Meridian'],['work','The Build']];
+  document.getElementById('tabs').innerHTML=tabs.map(([k,l])=>`<div class="tab ${TAB===k?'on':''}" data-tab="${k}">${l}</div>`).join('');
+  const b=document.getElementById('tabbody');
+  if(!J(c.natal_json)&&TAB!=='work'&&TAB!=='chat'){b.innerHTML=`<div class="card"><div class="muted small">Awaiting ${esc(c.name)}'s birth data — add it and cast to light this up.</div></div>`;return;}
+  if(TAB==='returns')b.innerHTML=tabReturns(c);
+  else if(TAB==='chart')b.innerHTML=tabChart(c);
+  else if(TAB==='transits')b.innerHTML=tabTransits(c);
+  else if(TAB==='prog')b.innerHTML=tabProg(c);
+  else if(TAB==='chat'){b.innerHTML=tabChat(c);loadChat();}
+  else if(TAB==='work')b.innerHTML=tabWork(c);
+  setTimeout(()=>{document.querySelectorAll('#wktext,.bv-in').forEach(t=>{t.style.height='auto';t.style.height=(t.scrollHeight+2)+'px';});},0);
+}
+function retCard(key,label,r){
+  if(!r)return `<div class="card"><div class="clab"><span class="ico">${label.split(' ')[0]}</span> ${label.replace(/^\S+\s/,'')}</div><div class="muted small" style="padding:6px 0;">Not cast yet.</div></div>`;
+  const arH=r.asc_ruler?.house??r.house, mrH=r.mc_ruler?.house??10;
+  return `<div class="card">
+    <div class="clab"><span class="ico">${label.split(' ')[0]}</span> ${label.replace(/^\S+\s/,'')}</div>
+    <div class="retv"><span class="gl">${SIGNGL[r.sign]||''}</span> ${r.sign} · ${ord(r.house)} house <span class="mut" style="font-family:var(--body);font-weight:400;font-size:12px;color:var(--ink3);font-style:italic;">— ${HMs[r.house]||''}</span></div>
+    <div class="lab" style="margin:4px 0 8px;color:var(--ink3);">${key==='sr'?'RETURN DAY':'BEGINS'} <span style="color:var(--accent);">${fmtD(r.begins)}</span> · ${key==='sr'?'RUNS TO':'ENDS'} ${fmtD(r.ends)}</div>
+    <div class="baserow"><div class="bl">Ascendant</div><div class="bv"><b>${r.asc?.sign||''} ${r.asc?.deg??''}°</b></div></div>
+    <div class="baserow"><div class="bl">Asc ruler</div><div class="bv"><b>${cap(r.asc_ruler?.planet||'')}</b> · ${ord(arH)} <span class="mut">— ${HMs[arH]||''}</span>${r.asc_ruler?.aspects?.length?`<br><span class="mut">${r.asc_ruler.aspects.join(', ')}</span>`:''}</div></div>
+    <div class="baserow"><div class="bl">Midheaven</div><div class="bv"><b>${r.mc||''}</b></div></div>
+    <div class="baserow"><div class="bl">MC ruler</div><div class="bv"><b>${cap(r.mc_ruler?.planet||'')}</b> · ${ord(mrH)} <span class="mut">— ${HMs[mrH]||''}</span>${r.mc_ruler?.aspects?.length?`<br><span class="mut">${r.mc_ruler.aspects.join(', ')}</span>`:''}</div></div>
+    <div class="small muted" style="margin-top:7px;">${esc(r.location_note||'')}</div>
+    <div class="btnrow">
+      <button class="btn" data-read="${key}">✦ Read this ${key==='sr'?'year':'month'}</button>
+      <button class="btn2" data-loc="${key}">✎ Location</button>
+      ${key==='lrc'?`<button class="btn2" data-draft="1">✉ Draft message</button>`:''}
+    </div>
+    <div class="readout" id="ro-${key}" style="display:none;"></div>
+  </div>`;
+}
+function tabReturns(c){
+  return retCard('sr','☉ Solar Return — the year',J(c.solar_return_json))
+       + retCard('lrc','☾ Current Lunar Return — this month',J(c.lunar_return_current_json))
+       + retCard('lrn','☾→ Next Lunar Return',J(c.lunar_return_next_json));
+}
+function natalAspects(n){
+  const abs=p=>{const i=SIGNS.indexOf(p.sign);return (i<0?0:i*30)+(parseFloat(p.deg)||0);};
+  const ks=Object.keys(n.planets).filter(k=>k!=='ascendant'&&k!=='midheaven');
+  const A={conjunction:0,sextile:60,square:90,trine:120,opposition:180},ORB={conjunction:8,sextile:5,square:7,trine:7,opposition:8},out=[];
+  for(let i=0;i<ks.length;i++)for(let j=i+1;j<ks.length;j++){let d=Math.abs(abs(n.planets[ks[i]])-abs(n.planets[ks[j]]))%360;if(d>180)d=360-d;
+    for(const an in A){if(Math.abs(d-A[an])<=ORB[an]){out.push({a:ks[i],b:ks[j],aspect:an,orb:+Math.abs(d-A[an]).toFixed(1)});break;}}}
+  return out.sort((x,y)=>x.orb-y.orb);
+}
+function tabChart(c){
+  const n=J(c.natal_json);
+  const ex=J(c.chart_extras_json)||{};
+  const exAsp=ex.aspects&&ex.aspects.length?ex.aspects:natalAspects(n);
+  const aspOf=k=>exAsp.filter(x=>x.a===k||x.b===k).map(x=>({o:(x.a===k?x.b:x.a),aspect:x.aspect,orb:x.orb}));
+  const order=['sun','moon','mercury','venus','mars','jupiter','saturn','uranus','neptune','pluto','mean_node'];
+  const rows=order.filter(k=>n.planets[k]).map(k=>{const p=n.planets[k];
+    const al=aspOf(k).map(x=>`${glyph[x.aspect]||''} ${ptName(x.o)}`).join(' · ');
+    return `<div class="placerow" data-place="${k}"><span class="g">${glyph[k]||''}</span>
+      <div><div class="pn">${ptName(k)}</div>${al?`<div style="font-size:11.5px;color:var(--ink3);margin-top:2px;line-height:1.5;">${al}</div>`:''}</div>
+      <div class="pv"><b>${p.sign}</b> ${p.deg}° · ${ord(p.house)}${p.retro?' · ℞':''}</div></div>`;}).join('');
+  const houses=(ex.houses||[]).map(h=>{const r=RUL[h.sign];const rp=n.planets[r];
+    return `<div class="baserow"><div class="bl">${ord(h.house)} house</div><div class="bv"><b>${h.sign}</b> ${h.deg}° <span class="mut">— ${HMs[h.house]}</span><br><span class="mut">ruler ${cap(r||'')}${rp?' sits in the '+ord(rp.house):''}</span></div></div>`;}).join('');
+  return `<div class="card"><div class="clab"><span class="ico">✶</span> Angles</div>
+      <div class="baserow"><div class="bl">Ascendant</div><div class="bv"><b>${n.asc.sign} ${n.asc.deg}°</b></div></div>
+      <div class="baserow"><div class="bl">Midheaven</div><div class="bv"><b>${n.mc.sign} ${n.mc.deg}°</b></div></div></div>
+    <div class="card"><div class="clab"><span class="ico">☉</span> Placements & their aspects — tap for the life-path read</div>${rows}</div>
+    ${houses?`<div class="card"><div class="clab"><span class="ico">⌂</span> Houses & rulers</div>${houses}</div>`:`<div class="card"><div class="muted small">House cusps compute on the next refresh (Settings → Refresh).</div></div>`}
+    <div class="card"><div class="clab"><span class="ico">♛</span> Legacy markers</div>
+      <div class="small" style="margin-top:7px;">Brand Planet &amp; Ideal Client Planet — waiting on your derivation rule. Send it to me and they'll appear on every chart.</div></div>
+    <div class="btnrow"><button class="btn2" id="fullchart">✶ Open full visual chart</button></div>`;
+}
+function tabTransits(c){
+  const t=[...(J(c.long_term_transits_json)||[])].sort((a,b)=>(b.intensity||0)-(a.intensity||0));
+  if(!t.length)return '<div class="card"><div class="muted small">No major transits cast.</div></div>';
+  return `<div class="card"><div class="clab"><span class="ico">♄</span> Major transits — tap for the deep dive</div>`+
+    t.map(x=>{const next=(x.hits||[]).map(D).filter(d=>d>=D(todayISO)).sort((a,b)=>a-b)[0];
+      const firing=(x.hits||[]).some(h=>within(D(h),D(todayISO),1));
+      return `<div class="mt ${firing?'firing':''}" data-tk="${x.planet}|${x.aspect}|${x.point}">
+        <span class="g">${glyph[x.planet]||''}${glyph[x.aspect]||''}${ptGl(x.point)}</span>
+        <div><div class="nm">${esc(x.label)}</div><div class="nx">${firing?'exact now':next?'next '+fmt(next):'completing'}</div></div>
+        <div class="ti">${ticks(x.intensity)}</div></div>`;}).join('')+`</div>`;
+}
+function timeline(t){
+  const s=D(t.start),e=D(t.end);if(!s||!e)return '';
+  const span=(e-s)||1,pos=d=>Math.max(0,Math.min(100,(d-s)/span*100));
+  const T=D(todayISO);const inWin=T>=s&&T<=e;
+  const hits=(t.hits||[]).map(h=>{const d=D(h);return `<span class="hit ${within(d,T,1)?'today':''}" style="left:${pos(d)}%"></span>`;}).join('');
+  const hl=(t.hits||[]).map(h=>{const d=D(h),now=within(d,T,1);return `<b class="${now?'now':''}">${fmt(d)}${now?' · now':''}</b>`;}).join(' &nbsp;·&nbsp; ');
+  return `<div class="tl"><div class="tlhead"><span class="tllab">Trigger window · exact hits</span><span class="ti">${ticks(t.intensity)}</span></div>
+    <div class="track"><span class="window"></span>${inWin?`<span class="todaymark" style="left:${pos(T)}%"></span>`:''%{hits}}</div>
+    <div class="dates"><span>${fmt(s)}</span><span>${fmt(e)}</span></div><div class="hits">Trigger days: ${hl||'—'}</div></div>`;
+}
+function tabProg(c){
+  const pj=c.progressions_json;const pp=pj?.points;
+  if(!pp)return '<div class="card"><div class="muted small">Progressions compute on the nightly refresh — or hit Refresh in Settings.</div></div>';
+  const order=['sun','moon','mercury','venus','mars','ascendant','midheaven'];
+  const rows=order.filter(k=>pp[k]).map(k=>{const p=pp[k];
+    return `<div class="placerow" data-prog="${k}"><span class="g">${glyph[k]||''}</span>
+      <div class="pn">Prog. ${ptName(k)}</div><div class="pv"><b>${p.sign}</b> ${Math.round((p.position||0)*10)/10}°${p.natal_house?' · natal '+ord(p.natal_house):''}${p.retrograde?' · ℞':''}</div></div>`;}).join('');
+  const act=progActive(c);
+  const actHtml=act.length?act.map(x=>`<div class="collrow"><span class="g">${glyph[x.p]||''}${glyph[x.aspect]||''}${glyph[x.point]||ptGl(x.point)}</span> Prog. ${ptName(x.p)} ${x.aspect} natal ${ptName(x.point)} <span class="muted" style="font-size:11px;">${x.orb}°</span></div>`).join(''):'<div class="muted small" style="padding:4px 0;">No progressed aspects within 1.5° right now — her Inner World is between exact beats.</div>';
+  return `<div class="card"><div class="clab"><span class="ico">⚡</span> Active now — progressed aspects (≤1.5°)</div><div style="margin-top:6px;">${actHtml}</div></div>
+  <div class="card"><div class="clab"><span class="ico">☽</span> Inner World — secondary progressions · tap for the read</div>${rows}
+    <div class="small muted" style="margin-top:8px;">${esc(pj.method||'')} · computed ${pj.computed_at?fmt(new Date(pj.computed_at)):''}</div></div>`;
+}
+function tabChat(c){
+  return `<div class="card"><div class="clab"><span class="ico">✦</span> Ask Meridian about ${esc(c.name)}</div>
+    <div class="chatlog" id="chatlog"><div class="muted small" style="padding:6px 0;">Loading…</div></div>
+    <div class="chatbar"><textarea id="chatin" placeholder="e.g. what should we focus on this lunar month?"></textarea>
+    <button class="btn" id="chatsend">Send</button></div></div>`;
+}
+async function loadChat(){
+  const {data}=await sb.from('coach_chat_messages').select('role,content').eq('client_id',CUR.id).order('created_at',{ascending:true}).limit(80);
+  renderChat(data||[]);
+}
+function renderChat(log){
+  const el=document.getElementById('chatlog');if(!el)return;
+  el.innerHTML=log.length?log.map(m=>`<div class="msg ${m.role}"><div class="bub">${m.role==='assistant'?mdHtml(m.content):esc(m.content)}</div></div>`).join(''):
+    `<div class="muted small" style="padding:6px 0;">Nothing yet — ask about her transits, returns, or what to build this month.</div>`;
+  el.scrollTop=el.scrollHeight;
+}
+function defaultBiz(){return {rows:[{label:'Avg monthly revenue',value:''},{label:'Business model',value:''},{label:'Currently selling',value:''},{label:'Offer suite',value:''}],links:[];}
+function tabWork(c){
+  const b=J(c.business_json)||defaultBiz();
+  const rows=(b.rows||[]).map((r,i)=>`<div class="bizrow" data-bi="${i}">
+    <input class="bl-in" data-bi="${i}" value="${esc(r.label)}" placeholder="Label" />
+    <textarea class="bv-in" data-bi="${i}" rows="1" placeholder="—">${esc(r.value)}</textarea>
+    <div class="bizmv"><button class="mv" data-mv="up" data-bi="${i}">▲</button><button class="mv" data-mv="dn" data-bi="${i}">▼</button><button class="mv" data-mv="rm" data-bi="${i}">✕</button></div></div>`).join('');
+  const links=(b.links||[]).map((l,i)=>`<span class="linkchip"><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a><button class="mv" data-lrm="${i}">✕</button></span>`).join('');
+  return `<div class="card"><div class="clab"><span class="ico">⚑</span> Business dashboard</div>
+    <div id="bizrows" style="margin-top:9px;">${rows}</div>
+    <div class="btnrow"><button class="btn2" id="bizadd">+ Add row</button><button class="btn" id="bizsave">Save dashboard</button></div>
+    <div class="clab" style="margin-top:16px;">Links — Instagram · site · docs</div>
+    <div style="margin-top:8px;" id="bizlinks">${links||'<span class="muted small">No links yet — add her Instagram, website, Google Docs below.</span>'}</div>
+    <div class="btnrow"><input id="linklabel" placeholder="Label (e.g. Instagram)" style="flex:1;min-width:110px;" /><input id="linkurl" placeholder="https://…" style="flex:2;min-width:150px;" /><button class="btn2" id="linkadd">+ Add link</button></div></div>
+  <div class="card"><div class="clab"><span class="ico">✎</span> What we're building <span class="saved" id="wksaved">Saved</span></div>
+    <textarea id="wktext" style="margin-top:9px;min-height:120px;">${esc(c.current_work||'')}</textarea>
+    <div class="btnrow"><button class="btn" id="wksave">Save</button></div>
+    ${c.work_summary?`<div class="auto"><div class="al">Auto summary · ${c.work_summary_updated_at?fmt(new Date(c.work_summary_updated_at)):''}</div><div class="at">${esc(c.work_summary)}</div></div>`:''}</div>`;
+}
+function collectBiz(){
+  const cur=J(CUR.business_json)||defaultBiz();
+  const els=[...document.querySelectorAll('#bizrows .bizrow')];
+  const rows=els.length?els.map(r=>({label:r.querySelector('.bl-in').value,value:r.querySelector('.bv-in').value})):(cur.rows||[]);
+  return {rows,links:(cur.links||[])};
+}
+async function saveBiz(b){
+  const {data,error}=await sb.from('private_clients').update({business_json:b,updated_at:new Date().toISOString()}).eq('id',CUR.id).select('business_json').single();
+  if(error){toast('Save failed: '+error.message);return;}
+  CUR.business_json=data.business_json;const i=DATA.findIndex(x=>x.id===CUR.id);if(i>=0)DATA[i]=CUR;
+  renderClient();toast('Dashboard saved ✓');
+}
+async function saveWork(){
+  const v=document.getElementById('wktext').value;
+  const {data,error}=await sb.from('private_clients').update({current_work:v,updated_at:new Date().toISOString()}).eq('id',CUR.id).select('current_work').single();
+  if(error){toast('Save failed: '+error.message);return;}
+  if((data&&data.current_work||'')!==v){toast('Save did not persist — try once more');return;}
+  CUR.current_work=v;const i=DATA.findIndex(x=>x.id===CUR.id);if(i>=0)DATA[i]=CUR;
+  const s=document.getElementById('wksaved');if(s){s.classList.add('on');setTimeout(()=>s.classList.remove('on'),1600);}
+  toast('Saved ✓');
+}
+function sheet(html){document.getElementById('sheet').innerHTML=html;document.getElementById('overlay').classList.add('show');document.body.style.overflow='hidden';}
+window.closeSheet=()=>{document.getElementById('overlay').classList.remove('show');document.body.style.overflow='';};
+function sheetTop(who,title,sub){return `<div class="sheet-top"><div><div class="who">${esc(who)}</div><h2>${title}</h2><div class="sub">${esc(sub||'')}</div></div><button class="closex" onclick="closeSheet()">✕</button></div>`;}
+async function readInto(elId,action,payload){
+  const el=document.getElementById(elId);if(!el)return;
+  el.style.display='block';el.innerHTML='<span class="muted">Reading the chart…</span>';
+  const r=await api(action,payload);
+  el.innerHTML=r.need_key?'<span class="muted">Add your Anthropic key in Settings (⚙︎ on the home screen) to turn on AI reads.</span>':(r.error?'<span class="muted">'+esc(r.error)+'</span>':mdHtml(r.content));
+}
+window.readInto=readInto;
+function openTransitSheet(c,tk){
+  const [p,a,pt]=tk.split('|');
+  const t=(J(c.long_term_transits_json)||[]).find(x=>x.planet===p&&x.aspect===a&&x.point===pt);
+  const ex=J(c.chart_extras_json)||{};
+  const n=J(c.natal_json)||{};
+  const trigs=(J(c.daily_triggered_json)?.triggers||[]).filter(x=>x.tkey===tk);
+  const trigNow=trigs.find(x=>x.date===todayISO);
+  let move='';
+  const nh=n.planets?.[pt]?.house||({ascendant:1,midheaven:10,ic:4,descendant:7}[pt]);
+  if(SKYPOS&&SKYPOS[p]&&ex.houses&&ex.houses.length){const th=houseOfLonJS(SKYPOS[p].abs_pos,ex.houses);
+    move=`<div class="baserow" style="margin-top:10px;"><div class="bl">The movement</div><div class="bv"><b>${pl(p)}</b> is moving through her ${ord(th)} <span class="mut">— ${HMs[th]}</span><br>hitting natal <b>${ptName(pt)}</b>${nh?` in her ${ord(nh)} <span class="mut">— ${HMs[nh]}</span>`:''}</div></div>`;}
+  const rules=(ex.houses||[]).filter(h=>RUL[h.sign]===pt).map(h=>h.house);
+  const pa=(ex.aspects||[]).filter(x=>x.a===pt||x.b===pt).map(x=>`${glyph[x.aspect]||x.aspect} ${ptName(x.a===pt?x.b:x.a)}`);
+  const life=(rules.length||pa.length)?`<div style="margin-top:12px;background:var(--paper2);border:1px solid var(--line2);border-radius:6px;padding:12px 14px;">
+    <div class="clab"><span class="ico">∞</span> Lifetime pattern — what this transit presses on</div>
+    <div class="small" style="margin-top:7px;line-height:1.65;"><b>${ptName(pt)}</b>${rules.length?` rules her <b>${rules.map(ord).join(' & ')}</b> <span class="muted">(${rules.map(h=>HMs[h]).join('; ')})</span>`:''}${nh?`${rules.length?' and':''} sits in her <b>${ord(nh)}</b>`:''}.${pa.length?`<br>Natal wiring: ${pa.join(' &nbsp;·&nbsp; ')}.`:''}</div></div>`:'';
+  sheet(sheetTop(c.name+' · Transit',esc(t?.label||pl(p)+' '+a+' '+ptName(pt)),trigNow?('⚡ Triggered by '+pl(trigNow.fast)+' today'):'The deep dive — themes in Meridian voice')+
+    `<div class="sheet-body">${t?timeline(t):''}
+    ${move}
+    <div id="trigdays" class="small muted" style="margin-top:10px;">Loading trigger days…</div>
+    ${life}
+    <div class="readout" id="ro-trans" style="display:none;"></div></div>`);
+  readInto('ro-trans','transit_deep_dive',{client_id:c.id,tkey:tk});
+  api('transit_triggers',{client_id:c.id,tkey:tk}).then(r=>{
+    const el=document.getElementById('trigdays');if(!el)return;
+    const list=r.triggers||[];
+    el.innerHTML=list.length?`<span class="lab" style="font-size:8.5px;">Trigger days — fast planets striking ${ptName(pt)}</span><div style="margin-top:5px;line-height:2;">`+list.map(x=>{const now=x.date===todayISO;return `<span style="display:inline-block;margin-right:13px;${now?'color:var(--accent);font-weight:bold;':''}">${glyph[x.fast]||''}${glyph[x.aspect]||''} <b>${fmt(D(x.date))}</b>${now?' · today':''}</span>`;}).join('')+'</div>'
+      :'<span class="muted">No fast-planet trigger days before this transit completes.</span>';
+  }).catch(()=>{const el=document.getElementById('trigdays');if(el)el.innerHTML='';});
+}
+function openPlacementSheet(c,k){
+  const n=J(c.natal_json);const p=n.planets[k];
+  sheet(sheetTop(c.name+' · Birth Chart',`${glyph[k]||''} ${ptName(k)} ${p?'in '+p.sign:''}`,p?`${p.deg}° · ${ord(p.house)} house — ${HMs[p.house]||''}`:'%')+
+    `<div class="sheet-body"><div class="readout" id="ro-place"><span class="muted">Reading the chart…</span></div></div>`);
+  readInto('ro-place','placement_read',{client_id:c.id,point:k});
+}
+function openProgSheet(c,k){
+  const pp=c.progressions_json?.points?.[k];
+  sheet(sheetTop(c.name+' · Inner World',`Prog. ${ptName(k)} in ${pp?.sign||''}`,pp?.natal_house?`moving through her natal ${ord(pp.natal_house)} house — ${HMs[pp.natal_house]||''}`:'solar arc')+
+    `<div class="sheet-body"><div class="readout" id="ro-prog"><span class="muted">Reading the chart…</span></div></div>`);
+  readInto('ro-prog','progression_read',{client_id:c.id,pkey:k});
+}
+function openDraftSheet(c){
+  sheet(sheetTop(c.name,'✉ Message draft','Her lunar month + location confirm — copy, then send it yourself')+
+    `<div class="sheet-body"><div class="readout" id="ro-draft"><span class="muted">Drafting in your voice…</span></div>
+    <div class="btnrow"><button class="btn" id="copydraft">Copy to clipboard</button></div></div>`);
+  api('draft_message',{client_id:c.id}).then(r=>{
+    const el=document.getElementById('ro-draft');if(!el)return;
+    el.dataset.raw=r.content||'';
+    el.innerHTML=r.need_key?'<span class="muted">Add your Anthropic key in Settings first.</span>':(r.error?esc(r.error):mdHtml(r.content));
+  });
+  document.getElementById('copydraft').onclick=()=>{const raw=document.getElementById('ro-draft')?.dataset.raw||'';navigator.clipboard.writeText(raw).then(()=>toast('Copied — paste into Telegram/email'));};
+}
+function openLocSheet(c,rkey){
+  const titles={sr:'Solar Return',lrc:'Current Lunar Return',lrn:'Next Lunar Return'};
+  sheet(sheetTop(c.name,'✎ '+titles[rkey]+' location','Where is she for this cycle? The chart recasts there.')+
+    `<div class="sheet-body"><div style="display:flex;gap:8px;"><input id="geoq" placeholder="City — e.g. Denver" autocomplete="off" style="flex:1;" /><button class="btn" id="geogo">Search</button></div>
+    <div id="geores"></div><div class="small muted" style="margin-top:10px;">Type the city, hit Search, pick the match — the ${rkey==='sr'?'year':'month'} recasts once at those coordinates.</div></div>`);
+  const q=document.getElementById('geoq');q.focus();
+  const go=async()=>{
+    const v=q.value.trim();if(v.length<2)return;
+    document.getElementById('geores').innerHTML='<div class="muted small" style="margin-top:8px;">Searching…</div>';
+    const r=await fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(v)+'&count=5&language=en&format=json').then(x=>x.json()).catch(()=>null);
+    document.getElementById('geores').innerHTML=(r?.results||[]).map((g,i)=>
+      `<div class="georow" data-geo='${esc(JSON.stringify({label:g.name+(g.admin1?', '+g.admin1:'')+', '+g.country, city:g.name, nation:g.country_code, lat:g.latitude, lng:g.longitude, tz:g.timezone}))}' data-rk="${rkey}">
+        ${esc(g.name)}${g.admin1?', '+esc(g.admin1):''} <span class="mut">· ${esc(g.country)} · ${esc(g.timezone)}</span></div>`).join('')||'<div class="muted small" style="margin-top:8px;">No matches.</div>';
+  };
+  q.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();go();}};
+  setTimeout(()=>{const b=document.getElementById('geogo');if(b)b.onclick=go;},0);
+}
+async function recompute(rkey,loc){
+  closeSheet();toast('Recasting at '+loc.label+'…');
+  const r=await api('recompute_return',{client_id:CUR.id,rkey,location:loc});
+  if(r.error){toast('Failed: '+r.error);return;}
+  const {data}=await sb.from('private_clients').select('*').eq('id',CUR.id).single();
+  if(data){CUR=data;const i=DATA.findIndex(x=>x.id===data.id);if(i>=0)DATA[i]=data;renderClient();toast('Recast at '+loc.label+' ✓');}
+}
+async function openFullChart(){
+  toast('Drawing the chart…');
+  const r=await api('chart_svg',{client_id:CUR.id});
+  if(r.error){toast(r.error);return;}
+  const w=window.open('','_blank');
+  if(w){w.document.write('<html><head><title>'+esc(CUR.name)+' — Birth Chart</title></head><body style="margin:0;background:#f3ede1;display:grid;place-items:center;min-height:100vh;">'+r.svg+'</body></html>');w.document.close();}
+}
+window.openSettings=async()=>{
+  sheet(sheetTop('MERIDIAN · BUILD','⚙︎ Settings','Keys, status, refresh')+
+    `<div class="sheet-body">
+      <div class="clab" style="margin-bottom:6px;">Anthropic API key</div>
+      <input id="akey" type="password" placeholder="sk-ant-…" />
+      <div class="btnrow"><button class="btn" id="savekey">Save & test key</button></div>
+      <div class="clab" style="margin:16px 0 6px;">Status</div>
+      <div class="statgrid" id="statgrid"><div class="stat"><div class="sv">…</div></div></div>
+      <div class="clab" style="margin:16px 0 6px;">Change password</div>
+      <input id="npass" type="password" placeholder="New password" />
+      <div class="btnrow"><button class="btn2" id="savepass">Update password</button></div>
+      <div class="btnrow" style="margin-top:18px;">
+        <button class="btn2" id="refreshnow">↻ Refresh all data now</button>
+        <button class="btn2" id="signout">Sign out</button>
+      </div></div>`);
+  const r=await api('health');
+  document.getElementById('statgrid').innerHTML=`
+    <div class="stat"><div class="clab">Astro server</div><div class="sv" style="color:${r.astro?'var(--live)':'var(--accent)'}">${r.astro?'Connected':'Unreachable'}</div></div>
+    <div class="stat"><div class="clab">Anthropic key</div><div class="sv" style="color:${r.anthropic_key?'var(--live)':'var(--accent)'}">${r.anthropic_key?'Configured':'Not set'}</div></div>
+    <div class="stat"><div class="clab">Clients</div><div class="sv">${r.clients??'—'}</div></div>
+    <div class="stat"><div class="clab">Sky cache</div><div class="sv">${r.collective_cached?'Fresh today':'Will fetch'}</div></div>`;
+  document.getElementById('savekey').onclick=async(e)=>{
+    e.target.disabled=true;
+    const r2=await api('setup_key',{anthropic_api_key:document.getElementById('akey').value.trim()});
+    e.target.disabled=false;
+    if(r2.ok){toast('Key saved — AI is on ✓');closeSheet();loadEnergy();}else toast(r2.error||'Failed');
+  };
+  document.getElementById('savepass').onclick=async()=>{
+    const {error}=await sb.auth.updateUser({password:document.getElementById('npass').value});
+    toast(error?error.message:'Password updated ✓');
+  };
+  document.getElementById('refreshnow').onclick=async(e)=>{
+    e.target.disabled=true;toast('Refreshing all clients…');
+    await api('refresh_daily');e.target.disabled=false;toast('Refreshed ✓');
+    const {data}=await sb.from('private_clients').select('*').order('name');if(data){DATA=data;if(CUR)CUR=DATA.find(x=>x.id===CUR.id)||CUR;}
+    closeSheet();
+  };
+  document.getElementById('signout').onclick=()=>sb.auth.signOut();
+};
+document.addEventListener('click',e=>{
+  const chip=e.target.closest('[data-open]');if(chip){openClientI(+chip.dataset.open);return;}
+  const tab=e.target.closest('[data-tab]');if(tab){TAB=tab.dataset.tab;renderClient();return;}
+  const trig=e.target.closest('.trigitem');if(trig){CUR=DATA[+trig.dataset.ci];TAB='transits';renderClient();show('client');openTransitSheet(CUR,trig.dataset.tk);return;}
+  const mt=e.target.closest('.mt');if(mt&&CUR){openTransitSheet(CUR,mt.dataset.tk);return;}
+  const pr=e.target.closest('[data-place]');if(pr&&CUR){openPlacementSheet(CUR,pr.dataset.place);return;}
+  const pg=e.target.closest('[data-prog]');if(pg&&CUR){openProgSheet(CUR,pg.dataset.prog);return;}
+  const rd=e.target.closest('[data-read]');if(rd&&CUR){const k=rd.dataset.read;readInto('ro-'+k,'return_read',{client_id:CUR.id,rkey:k});return;}
+  const lc=e.target.closest('[data-loc]');if(lc&&CUR){openLocSheet(CUR,lc.dataset.loc);return;}
+  const dr=e.target.closest('[data-draft]');if(dr&&CUR){openDraftSheet(CUR);return;}
+  const geo=e.target.closest('[data-geo]');if(geo){recompute(geo.dataset.rk,JSON.parse(geo.dataset.geo));return;}
+  if(e.target.id==='fullchart'){openFullChart();return;}
+  if(e.target.id==='wksave'&&CUR){saveWork();return;}
+  if(e.target.id==='bizsave'&&CUR){saveBiz(collectBiz());return;}
+  if(e.target.id==='bizadd'&&CUR){const b=collectBiz();b.rows.push({label:'',value:''});CUR.business_json=b;renderClient();return;}
+  if(e.target.id==='linkadd'&&CUR){const b=collectBiz();const l=document.getElementById('linklabel').value.trim();let u=document.getElementById('linkurl').value.trim();if(!l||!u){toast('Label and URL, please');return;}if(!/^https?:\/\//i.test(u))u='https://'+u;b.links.push({label:l,url:u});saveBiz(b);return;}
+  const lrm=e.target.closest('[data-lrm]');if(lrm&&CUR){const b=collectBiz();b.links.splice(+lrm.dataset.lrm,1);saveBiz(b);return;}
+  const mvb=e.target.closest('[data-mv]');if(mvb&&CUR){const b=collectBiz();const i=+mvb.dataset.bi;const k=mvb.dataset.mv;
+    if(k==='rm')b.rows.splice(i,1);
+    else if(k==='up'&&i>0){const t=b.rows[i-1];b.rows[i-1]=b.rows[i];b.rows[i]=t;}
+    else if(k==='dn'&&i<b.rows.length-1){const t=b.rows[i+1];b.rows[i+1]=b.rows[i];b.rows[i]=t;}
+    CUR.business_json=b;renderClient();return;
+  }
+  if(e.target.id==='chatsend'&&CUR){sendChat();return;}
+  if(e.target.id==='overlay')closeSheet();
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeSheet();
+  if(e.key==='Enter'&&!e.shiftKey&&e.target.id==='chatin'){e.preventDefault();sendChat();}
+});
+document.addEventListener('input',e=>{
+  if(e.target&&(e.target.id==='wktext'||e.target.classList.contains('bv-in'))){e.target.style.height='auto';e.target.style.height=(e.target.scrollHeight+2)+'px';}
+});
+async function sendChat(){
+  const ta=document.getElementById('chatin');const q=(ta?.value||'').trim();if(!q)return;ta.value='';
+  const {data:log}=await sb.from('coach_chat_messages').select('role,content').eq('client_id',CUR.id).order('created_at',{ascending:true}).limit(80);
+  renderChat([...(log||[]),{role:'user',content:q},{role:'assistant',content:'…'}]);
+  const r=await api('chat',{client_id:CUR.id,message:q});
+  if(r.need_key){renderChat([...(log||[]),{role:'user',content:q},{role:'assistant',content:'Add your Anthropic key in Settings (⚙︎) and ask me again.'}]);return;}
+  loadChat();
+}
+</script>
+</body>
+</html>
