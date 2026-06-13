@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>MERIDIAN â€” BUILD</title>
+<title>MERIDIAN — BUILD</title>
 <link rel="manifest" href="./manifest.webmanifest" />
 <meta name="theme-color" content="#1b1613" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -164,7 +164,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);}
 <body>
 <div class="wrap">
   <div id="login" class="screen">
-    <div class="lab">MERIDIAN Â· BUILD Â· Private</div>
+    <div class="lab">MERIDIAN · BUILD · Private</div>
     <h1>Coach sign-in</h1>
     <div class="meridian"><span class="seg"></span><span class="mark"></span><span class="thin"></span></div>
     <div class="field"><input id="lemail" type="email" autocomplete="username" value="kacydanae@gmail.com" /></div>
@@ -179,32 +179,32 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);}
   </div>
   <div id="home" class="screen">
     <div class="topbar">
-      <div class="lab">BUILD Mastermind Â· Coach</div>
+      <div class="lab">BUILD Mastermind · Coach</div>
       <h1>The pulse, today</h1>
-      <button class="gear" onclick="openSettings()">âš™ï¸Ž</button>
+      <button class="gear" onclick="openSettings()">⚙︎</button>
     </div>
     <div class="meridian"><span class="seg"></span><span class="mark"></span><span class="thin"></span></div>
     <div class="lab" id="dateline" style="margin-top:6px;color:var(--ink2);"></div>
     <div class="card">
-      <div class="clab"><span class="ico">â—ˆ</span> Triggered â€” this week's exact hits</div>
-      <div id="trig"><div class="muted small" style="padding:6px 0;">Loadingâ€¦</div></div>
+      <div class="clab"><span class="ico">◈</span> Triggered — this week's exact hits</div>
+      <div id="trig"><div class="muted small" style="padding:6px 0;">Loading…</div></div>
     </div>
     <div class="card">
-      <div class="clab"><span class="ico">â˜½</span> The collective sky</div>
-      <div id="coll"><div class="muted small" style="padding:6px 0;">Reading the skyâ€¦</div></div>
+      <div class="clab"><span class="ico">☽</span> The collective sky</div>
+      <div id="coll"><div class="muted small" style="padding:6px 0;">Reading the sky…</div></div>
     </div>
     <div class="card">
-      <div class="clab"><span class="ico">âœ¦</span> Today's energy</div>
-      <div id="energy" class="energy" style="margin-top:8px;"><span class="muted small">â€¦</span></div>
+      <div class="clab"><span class="ico">✦</span> Today's energy</div>
+      <div id="energy" class="energy" style="margin-top:8px;"><span class="muted small">…</span></div>
     </div>
     <div class="card">
-      <div class="clab"><span class="ico">âœ¶</span> Your people</div>
+      <div class="clab"><span class="ico">✶</span> Your people</div>
       <div class="scopebar" id="scopebar"></div>
       <div class="chips" id="chips"></div>
     </div>
   </div>
   <div id="client" class="screen">
-    <button class="back" onclick="showHome()">â† All clients</button>
+    <button class="back" onclick="showHome()">← All clients</button>
     <div class="chead" id="chead"></div>
     <div class="tabs" id="tabs"></div>
     <div id="tabbody"></div>
@@ -219,14 +219,14 @@ const ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZ
 const FN = SB_URL + "/functions/v1/coach-api";
 const sb = createClient(SB_URL, ANON);
 window.sb = sb;
-const glyph={sun:'â˜‰',moon:'â˜¾',mercury:'â˜¿',venus:'â™€',mars:'â™‚',jupiter:'â™ƒ',saturn:'â™„',uranus:'â™…',neptune:'â™†',pluto:'â™‡',chiron:'âš·',mean_node:'â˜Š',north_node:'â˜Š',lilith:'âš¸',true_lilith:'âš¸',conjunction:'â˜Œ',sextile:'âš¹',square:'â–¡',trine:'â–³',opposition:'â˜',ascendant:'AC',midheaven:'MC',ic:'IC',descendant:'DC'};
-const SIGNGL={Aries:'â™ˆ',Taurus:'â™‰',Gemini:'â™Š',Cancer:'â™‹',Leo:'â™Œ',Virgo:'â™',Libra:'â™Ž',Scorpio:'â™',Sagittarius:'â™',Capricorn:'â™‘',Aquarius:'â™’',Pisces:'â™“'};
+const glyph={sun:'☉',moon:'☾',mercury:'☿',venus:'♀',mars:'♂',jupiter:'♃',saturn:'♄',uranus:'♅',neptune:'♆',pluto:'♇',chiron:'⚷',mean_node:'☊',north_node:'☊',lilith:'⚸',true_lilith:'⚸',conjunction:'☌',sextile:'⚹',square:'□',trine:'△',opposition:'☍',ascendant:'AC',midheaven:'MC',ic:'IC',descendant:'DC'};
+const SIGNGL={Aries:'♈',Taurus:'♉',Gemini:'♊',Cancer:'♋',Leo:'♌',Virgo:'♍',Libra:'♎',Scorpio:'♏',Sagittarius:'♐',Capricorn:'♑',Aquarius:'♒',Pisces:'♓'};
 const SIGNS=["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
 const HMs={1:"self / brand",2:"money / worth",3:"voice / message",4:"foundations",5:"creative offers",6:"systems",7:"clients",8:"depth / investment",9:"teaching / scale",10:"authority / visibility",11:"audience / community",12:"the unseen / rest"};
 const RUL={Aries:'mars',Taurus:'venus',Gemini:'mercury',Cancer:'moon',Leo:'sun',Virgo:'mercury',Libra:'venus',Scorpio:'pluto',Sagittarius:'jupiter',Capricorn:'saturn',Aquarius:'uranus',Pisces:'neptune'};
 let SKYPOS=null;
 function houseOfLonJS(lon,houses){const abs=houses.map(h=>SIGNS.indexOf(h.sign)*30+(h.deg||0));for(let i=0;i<12;i++){const a=abs[i],b=abs[(i+1)%12];if(((lon-a+360)%360)<((b-a+360)%360))return i+1;}return 12;}
-const fmtD=s=>{const d=D(s);return d?d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'}):'â€”';};
+const fmtD=s=>{const d=D(s);return d?d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'}):'—';};
 function progActive(c){
   const n=J(c.natal_json);const pp=(c.progressions_json||{}).points;if(!n||!pp)return[];
   const abs=p=>{const i=SIGNS.indexOf(p.sign);return(i<0?0:i*30)+(parseFloat(p.deg)||0);};
@@ -246,7 +246,7 @@ const ptName=p=>({ascendant:'Ascendant',midheaven:'Midheaven',ic:'IC',descendant
 const D=s=>{const a=(s||'').split('-');return a.length===3?new Date(+a[0],+a[1]-1,+a[2]):null;};
 const fmt=d=>d?d.toLocaleDateString('en-US',{month:'short',day:'numeric'}):'';
 const esc=s=>(s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-function mdHtml(t){let h=esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/^(HOOK|READ|BUSINESS LENS|JOURNAL|THE SKY|FOR GOOD|NOT FOR):/gm,'<b>$1:</b>').replace(/^\s*[-â€¢]\s+(.*)$/gm,'â€¢ $1');return '<p>'+h.replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>')+'</p>';}
+function mdHtml(t){let h=esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/^(HOOK|READ|BUSINESS LENS|JOURNAL|THE SKY|FOR GOOD|NOT FOR):/gm,'<b>$1:</b>').replace(/^\s*[-•]\s+(.*)$/gm,'• $1');return '<p>'+h.replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>')+'</p>';}
 const TODAY=new Date(); const todayISO=new Date(TODAY.getTime()-TODAY.getTimezoneOffset()*60000).toISOString().slice(0,10);
 const within=(x,y,days)=>x&&y&&Math.abs((x-y)/864e5)<=days;
 const ticks=n=>Array.from({length:5},(_,i)=>`<i class="${i<(n||0)?'on':''}"></i>`).join('');
@@ -270,7 +270,7 @@ document.getElementById('sendcode').onclick=async()=>{
   if(error){document.getElementById('lerr').textContent=error.message;return;}
   document.getElementById('codewrap').style.display='block';
   document.getElementById('lerr').textContent='';
-  toast('Code sent â€” check your email');
+  toast('Code sent — check your email');
 };
 document.getElementById('verifycode').onclick=async()=>{
   const e=document.getElementById('lemail').value.trim(), c=document.getElementById('lcode').value.trim();
@@ -294,7 +294,7 @@ async function boot(){
   if(navigator.serviceWorker) navigator.serviceWorker.register('./sw.js').catch(()=>{});
 }
 function sigLine(c){const n=J(c.natal_json);if(!n||!n.planets)return 'Awaiting chart';
-  return `${n.planets.sun?.sign||''} â˜‰ Â· ${n.planets.moon?.sign||''} â˜¾ Â· ${n.asc?.sign||''} â†‘`;}
+  return `${n.planets.sun?.sign||''} ☉ · ${n.planets.moon?.sign||''} ☾ · ${n.asc?.sign||''} ↑`;}
 function weekHits(){
   const out=[];
   DATA.forEach((c,ci)=>{(J(c.long_term_transits_json)||[]).forEach(t=>{(t.hits||[]).forEach(h=>{
@@ -315,17 +315,17 @@ function renderTrig(){
   rows.sort((a,b)=>Math.abs(a.days)-Math.abs(b.days)||(a.kind==='exact'?-1:1)||(b.inten-a.inten));
   document.getElementById('trig').innerHTML = rows.length? rows.slice(0,18).map(x=>{
     const when=x.days===0?(x.kind==='exact'?'exact today':'today'):x.days>0?('in '+x.days+'d'):'yesterday';
-    const badge=x.kind==='exact'?when:('âš¡ '+(glyph[x.fast]||'')+' '+when);
+    const badge=x.kind==='exact'?when:('⚡ '+(glyph[x.fast]||'')+' '+when);
     return `<div class="trigitem tap" data-ci="${x.ci}" data-tk="${x.tk}">
-      <span class="g">${x.kind==='exact'?'â—ˆ':'âš¡'}</span>
-      <div><div class="who">${esc(x.name)}</div><div class="what">${esc(x.label)}${x.kind==='trigger'?' <span class="muted" style="font-size:11px;">Â· trigger: '+pl(x.fast)+' '+(glyph[x.fasp]||x.fasp)+'</span>':''}</div></div>
+      <span class="g">${x.kind==='exact'?'◈':'⚡'}</span>
+      <div><div class="who">${esc(x.name)}</div><div class="what">${esc(x.label)}${x.kind==='trigger'?' <span class="muted" style="font-size:11px;">· trigger: '+pl(x.fast)+' '+(glyph[x.fasp]||x.fasp)+'</span>':''}</div></div>
       <span class="when ${x.days===0?'now':''}">${badge}</span></div>`;
   }).join('') : '<div class="muted small" style="padding:6px 0;">No exact hits or trigger days this week. The board is quiet.</div>';
 }
 let SCOPE='work_family';
 const SCOPES=[['work_family','Work + Family'],['work','Just work'],['family','Just family'],['me','Just me']];
 function ageFromISO(b){if(!b)return null;const d=D(b);if(!d)return null;let a=TODAY.getFullYear()-d.getFullYear();const m=TODAY.getMonth()-d.getMonth();if(m<0||(m===0&&TODAY.getDate()<d.getDate()))a--;return a;}
-function minorBand(a){return a==null?null:a<13?'child (0â€“12)':a<18?'teen (13â€“17)':null;}
+function minorBand(a){return a==null?null:a<13?'child (0–12)':a<18?'teen (13–17)':null;}
 function inScope(c){const s=c.section||'build';return SCOPE==='work_family'?(s==='build'||s==='family'):SCOPE==='work'?s==='build':SCOPE==='family'?s==='family':SCOPE==='me'?s==='me':true;}
 window.setScope=(s)=>{SCOPE=s;renderScope();renderChips();};
 function renderScope(){const el=document.getElementById('scopebar');if(!el)return;el.innerHTML=SCOPES.map(([k,l])=>`<button class="segbtn ${SCOPE===k?'on':''}" onclick="setScope('${k}')">${l}</button>`).join('');}
@@ -341,8 +341,8 @@ function renderChips(){
       const band=(c.section==='family')?minorBand(ageFromISO(c.birth_date)):null;
       return `<div class="chip ${cast?'':'pend'}" data-open="${i}">
         <div class="nm">${esc(c.name)}</div><div class="sig">${sigLine(c)}</div>
-        ${band?`<span class="fire" style="background:var(--gold)">â— ${band}</span>`:''}
-        ${fires.length?`<span class="fire">â— ${fires.length} exact today</span>`:''}</div>`;
+        ${band?`<span class="fire" style="background:var(--gold)">● ${band}</span>`:''}
+        ${fires.length?`<span class="fire">● ${fires.length} exact today</span>`:''}</div>`;
     }).join('');
     html+='</div>';
   });
@@ -355,9 +355,9 @@ async function loadCollective(){
   const m=coll.moon||{}; const voc=coll.void_of_course;
   const vt=t=>t?new Date(t).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):'';
   const vd=t=>t?new Date(t).toLocaleDateString('en-US',{weekday:'short'}):'';
-  let h=`<div class="collrow"><span class="g">${SIGNGL[m.sign]||'â˜½'}</span> Moon in <b>&nbsp;${m.sign||'â€”'}</b>&nbsp;Â· ${m.phase||''}${m.ingress_utc?` Â· enters ${m.next_sign} ${vd(m.ingress_utc)} ${vt(m.ingress_utc)}`:''}</div>`;
-  if(voc) h+=`<span class="vocchip ${voc.active_now?'on':''}">${voc.active_now?'VOID-OF-COURSE NOW':'Void-of-course'} ${vd(voc.start_utc)} ${vt(voc.start_utc)} â€“ ${vt(voc.end_utc)} Â· after ${esc(voc.last_aspect)}</span>`;
-  h+=(coll.aspects||[]).slice(0,6).map(a=>`<div class="collrow"><span class="g">${glyph[a.a]||''}${glyph[a.aspect]||''}${glyph[a.b]||''}</span> ${esc(a.label)} <span class="muted" style="font-size:11px;">${a.orb}Â°</span></div>`).join('');
+  let h=`<div class="collrow"><span class="g">${SIGNGL[m.sign]||'☽'}</span> Moon in <b>&nbsp;${m.sign||'—'}</b>&nbsp;· ${m.phase||''}${m.ingress_utc?` · enters ${m.next_sign} ${vd(m.ingress_utc)} ${vt(m.ingress_utc)}`:''}</div>`;
+  if(voc) h+=`<span class="vocchip ${voc.active_now?'on':''}">${voc.active_now?'VOID-OF-COURSE NOW':'Void-of-course'} ${vd(voc.start_utc)} ${vt(voc.start_utc)} – ${vt(voc.end_utc)} · after ${esc(voc.last_aspect)}</span>`;
+  h+=(coll.aspects||[]).slice(0,6).map(a=>`<div class="collrow"><span class="g">${glyph[a.a]||''}${glyph[a.aspect]||''}${glyph[a.b]||''}</span> ${esc(a.label)} <span class="muted" style="font-size:11px;">${a.orb}°</span></div>`).join('');
   document.getElementById('coll').innerHTML=h;
 }
 async function loadEnergy(){
@@ -373,11 +373,11 @@ window.showHome=()=>{renderTrig();renderScope();renderChips();show('home');};
 function renderClient(){
   const c=CUR;
   document.getElementById('chead').innerHTML=`<div class="nm">${esc(c.name)}</div><div class="sig">${sigLine(c)}</div>
-    <div class="loc">${esc(c.current_location||'No current city on file â€” returns cast at birthplace')}${c.build_stage?' Â· '+esc(c.build_stage):''}</div>`;
+    <div class="loc">${esc(c.current_location||'No current city on file — returns cast at birthplace')}${c.build_stage?' · '+esc(c.build_stage):''}</div>`;
   const tabs=[['returns','Returns'],['chart','Birth Chart'],['transits','Transits'],['prog','Progressions'],['chat','Ask Meridian'],['work','The Build']];
   document.getElementById('tabs').innerHTML=tabs.map(([k,l])=>`<div class="tab ${TAB===k?'on':''}" data-tab="${k}">${l}</div>`).join('');
   const b=document.getElementById('tabbody');
-  if(!J(c.natal_json)&&TAB!=='work'&&TAB!=='chat'){b.innerHTML=`<div class="card"><div class="muted small">Awaiting ${esc(c.name)}'s birth data â€” add it and cast to light this up.</div></div>`;return;}
+  if(!J(c.natal_json)&&TAB!=='work'&&TAB!=='chat'){b.innerHTML=`<div class="card"><div class="muted small">Awaiting ${esc(c.name)}'s birth data — add it and cast to light this up.</div></div>`;return;}
   if(TAB==='returns')b.innerHTML=tabReturns(c);
   else if(TAB==='chart')b.innerHTML=tabChart(c);
   else if(TAB==='transits')b.innerHTML=tabTransits(c);
@@ -391,25 +391,25 @@ function retCard(key,label,r){
   const arH=r.asc_ruler?.house??r.house, mrH=r.mc_ruler?.house??10;
   return `<div class="card">
     <div class="clab"><span class="ico">${label.split(' ')[0]}</span> ${label.replace(/^\S+\s/,'')}</div>
-    <div class="retv"><span class="gl">${SIGNGL[r.sign]||''}</span> ${r.sign} Â· ${ord(r.house)} house <span class="mut" style="font-family:var(--body);font-weight:400;font-size:12px;color:var(--ink3);font-style:italic;">â€” ${HMs[r.house]||''}</span></div>
-    <div class="lab" style="margin:4px 0 8px;color:var(--ink3);">${key==='sr'?'RETURN DAY':'BEGINS'} <span style="color:var(--accent);">${fmtD(r.begins)}</span> Â· ${key==='sr'?'RUNS TO':'ENDS'} ${fmtD(r.ends)}</div>
-    <div class="baserow"><div class="bl">Ascendant</div><div class="bv"><b>${r.asc?.sign||''} ${r.asc?.deg??''}Â°</b></div></div>
-    <div class="baserow"><div class="bl">Asc ruler</div><div class="bv"><b>${cap(r.asc_ruler?.planet||'')}</b> Â· ${ord(arH)} <span class="mut">â€” ${HMs[arH]||''}</span>${r.asc_ruler?.aspects?.length?`<br><span class="mut">${r.asc_ruler.aspects.join(', ')}</span>`:''}</div></div>
+    <div class="retv"><span class="gl">${SIGNGL[r.sign]||''}</span> ${r.sign} · ${ord(r.house)} house <span class="mut" style="font-family:var(--body);font-weight:400;font-size:12px;color:var(--ink3);font-style:italic;">— ${HMs[r.house]||''}</span></div>
+    <div class="lab" style="margin:4px 0 8px;color:var(--ink3);">${key==='sr'?'RETURN DAY':'BEGINS'} <span style="color:var(--accent);">${fmtD(r.begins)}</span> · ${key==='sr'?'RUNS TO':'ENDS'} ${fmtD(r.ends)}</div>
+    <div class="baserow"><div class="bl">Ascendant</div><div class="bv"><b>${r.asc?.sign||''} ${r.asc?.deg??''}°</b></div></div>
+    <div class="baserow"><div class="bl">Asc ruler</div><div class="bv"><b>${cap(r.asc_ruler?.planet||'')}</b> · ${ord(arH)} <span class="mut">— ${HMs[arH]||''}</span>${r.asc_ruler?.aspects?.length?`<br><span class="mut">${r.asc_ruler.aspects.join(', ')}</span>`:''}</div></div>
     <div class="baserow"><div class="bl">Midheaven</div><div class="bv"><b>${r.mc||''}</b></div></div>
-    <div class="baserow"><div class="bl">MC ruler</div><div class="bv"><b>${cap(r.mc_ruler?.planet||'')}</b> Â· ${ord(mrH)} <span class="mut">â€” ${HMs[mrH]||''}</span>${r.mc_ruler?.aspects?.length?`<br><span class="mut">${r.mc_ruler.aspects.join(', ')}</span>`:''}</div></div>
+    <div class="baserow"><div class="bl">MC ruler</div><div class="bv"><b>${cap(r.mc_ruler?.planet||'')}</b> · ${ord(mrH)} <span class="mut">— ${HMs[mrH]||''}</span>${r.mc_ruler?.aspects?.length?`<br><span class="mut">${r.mc_ruler.aspects.join(', ')}</span>`:''}</div></div>
     <div class="small muted" style="margin-top:7px;">${esc(r.location_note||'')}</div>
     <div class="btnrow">
-      <button class="btn" data-read="${key}">âœ¦ Read this ${key==='sr'?'year':'month'}</button>
-      <button class="btn2" data-loc="${key}">âœŽ Location</button>
-      ${key==='lrc'?`<button class="btn2" data-draft="1">âœ‰ Draft message</button>`:''}
+      <button class="btn" data-read="${key}">✦ Read this ${key==='sr'?'year':'month'}</button>
+      <button class="btn2" data-loc="${key}">✎ Location</button>
+      ${key==='lrc'?`<button class="btn2" data-draft="1">✉ Draft message</button>`:''}
     </div>
     <div class="readout" id="ro-${key}" style="display:none;"></div>
   </div>`;
 }
 function tabReturns(c){
-  return retCard('sr','â˜‰ Solar Return â€” the year',J(c.solar_return_json))
-       + retCard('lrc','â˜¾ Current Lunar Return â€” this month',J(c.lunar_return_current_json))
-       + retCard('lrn','â˜¾â†’ Next Lunar Return',J(c.lunar_return_next_json));
+  return retCard('sr','☉ Solar Return — the year',J(c.solar_return_json))
+       + retCard('lrc','☾ Current Lunar Return — this month',J(c.lunar_return_current_json))
+       + retCard('lrn','☾→ Next Lunar Return',J(c.lunar_return_next_json));
 }
 function natalAspects(n){
   const abs=p=>{const i=SIGNS.indexOf(p.sign);return (i<0?0:i*30)+(parseFloat(p.deg)||0);};
@@ -426,25 +426,25 @@ function tabChart(c){
   const aspOf=k=>exAsp.filter(x=>x.a===k||x.b===k).map(x=>({o:(x.a===k?x.b:x.a),aspect:x.aspect,orb:x.orb}));
   const order=['sun','moon','mercury','venus','mars','jupiter','saturn','uranus','neptune','pluto','mean_node'];
   const rows=order.filter(k=>n.planets[k]).map(k=>{const p=n.planets[k];
-    const al=aspOf(k).map(x=>`${glyph[x.aspect]||''} ${ptName(x.o)}`).join(' Â· ');
+    const al=aspOf(k).map(x=>`${glyph[x.aspect]||''} ${ptName(x.o)}`).join(' · ');
     return `<div class="placerow" data-place="${k}"><span class="g">${glyph[k]||''}</span>
       <div><div class="pn">${ptName(k)}</div>${al?`<div style="font-size:11.5px;color:var(--ink3);margin-top:2px;line-height:1.5;">${al}</div>`:''}</div>
-      <div class="pv"><b>${p.sign}</b> ${p.deg}Â° Â· ${ord(p.house)}${p.retro?' Â· â„ž':''}</div></div>`;}).join('');
+      <div class="pv"><b>${p.sign}</b> ${p.deg}° · ${ord(p.house)}${p.retro?' · ℞':''}</div></div>`;}).join('');
   const houses=(ex.houses||[]).map(h=>{const r=RUL[h.sign];const rp=n.planets[r];
-    return `<div class="baserow"><div class="bl">${ord(h.house)} house</div><div class="bv"><b>${h.sign}</b> ${h.deg}Â° <span class="mut">â€” ${HMs[h.house]}</span><br><span class="mut">ruler ${cap(r||'')}${rp?' sits in the '+ord(rp.house):''}</span></div></div>`;}).join('');
-  return `<div class="card"><div class="clab"><span class="ico">âœ¶</span> Angles</div>
-      <div class="baserow"><div class="bl">Ascendant</div><div class="bv"><b>${n.asc.sign} ${n.asc.deg}Â°</b></div></div>
-      <div class="baserow"><div class="bl">Midheaven</div><div class="bv"><b>${n.mc.sign} ${n.mc.deg}Â°</b></div></div></div>
-    <div class="card"><div class="clab"><span class="ico">â˜‰</span> Placements & their aspects â€” tap for the life-path read</div>${rows}</div>
-    ${houses?`<div class="card"><div class="clab"><span class="ico">âŒ‚</span> Houses & rulers</div>${houses}</div>`:`<div class="card"><div class="muted small">House cusps compute on the next refresh (Settings â†’ Refresh).</div></div>`}
-    <div class="card"><div class="clab"><span class="ico">â™›</span> Legacy markers</div>
-      <div class="small" style="margin-top:7px;">Brand Planet &amp; Ideal Client Planet â€” waiting on your derivation rule. Send it to me and they'll appear on every chart.</div></div>
-    <div class="btnrow"><button class="btn2" id="fullchart">âœ¶ Open full visual chart</button></div>`;
+    return `<div class="baserow"><div class="bl">${ord(h.house)} house</div><div class="bv"><b>${h.sign}</b> ${h.deg}° <span class="mut">— ${HMs[h.house]}</span><br><span class="mut">ruler ${cap(r||'')}${rp?' sits in the '+ord(rp.house):''}</span></div></div>`;}).join('');
+  return `<div class="card"><div class="clab"><span class="ico">✶</span> Angles</div>
+      <div class="baserow"><div class="bl">Ascendant</div><div class="bv"><b>${n.asc.sign} ${n.asc.deg}°</b></div></div>
+      <div class="baserow"><div class="bl">Midheaven</div><div class="bv"><b>${n.mc.sign} ${n.mc.deg}°</b></div></div></div>
+    <div class="card"><div class="clab"><span class="ico">☉</span> Placements & their aspects — tap for the life-path read</div>${rows}</div>
+    ${houses?`<div class="card"><div class="clab"><span class="ico">⌂</span> Houses & rulers</div>${houses}</div>`:`<div class="card"><div class="muted small">House cusps compute on the next refresh (Settings → Refresh).</div></div>`}
+    <div class="card"><div class="clab"><span class="ico">♛</span> Legacy markers</div>
+      <div class="small" style="margin-top:7px;">Brand Planet &amp; Ideal Client Planet — waiting on your derivation rule. Send it to me and they'll appear on every chart.</div></div>
+    <div class="btnrow"><button class="btn2" id="fullchart">✶ Open full visual chart</button></div>`;
 }
 function tabTransits(c){
   const t=[...(J(c.long_term_transits_json)||[])].sort((a,b)=>(b.intensity||0)-(a.intensity||0));
   if(!t.length)return '<div class="card"><div class="muted small">No major transits cast.</div></div>';
-  return `<div class="card"><div class="clab"><span class="ico">â™„</span> Major transits â€” tap for the deep dive</div>`+
+  return `<div class="card"><div class="clab"><span class="ico">♄</span> Major transits — tap for the deep dive</div>`+
     t.map(x=>{const next=(x.hits||[]).map(D).filter(d=>d>=D(todayISO)).sort((a,b)=>a-b)[0];
       const firing=(x.hits||[]).some(h=>within(D(h),D(todayISO),1));
       return `<div class="mt ${firing?'firing':''}" data-tk="${x.planet}|${x.aspect}|${x.point}">
@@ -457,27 +457,27 @@ function timeline(t){
   const span=(e-s)||1,pos=d=>Math.max(0,Math.min(100,(d-s)/span*100));
   const T=D(todayISO);const inWin=T>=s&&T<=e;
   const hits=(t.hits||[]).map(h=>{const d=D(h);return `<span class="hit ${within(d,T,1)?'today':''}" style="left:${pos(d)}%"></span>`;}).join('');
-  const hl=(t.hits||[]).map(h=>{const d=D(h),now=within(d,T,1);return `<b class="${now?'now':''}">${fmt(d)}${now?' Â· now':''}</b>`;}).join(' &nbsp;Â·&nbsp; ');
-  return `<div class="tl"><div class="tlhead"><span class="tllab">Trigger window Â· exact hits</span><span class="ti">${ticks(t.intensity)}</span></div>
+  const hl=(t.hits||[]).map(h=>{const d=D(h),now=within(d,T,1);return `<b class="${now?'now':''}">${fmt(d)}${now?' · now':''}</b>`;}).join(' &nbsp;·&nbsp; ');
+  return `<div class="tl"><div class="tlhead"><span class="tllab">Trigger window · exact hits</span><span class="ti">${ticks(t.intensity)}</span></div>
     <div class="track"><span class="window"></span>${inWin?`<span class="todaymark" style="left:${pos(T)}%"></span>`:''}${hits}</div>
-    <div class="dates"><span>${fmt(s)}</span><span>${fmt(e)}</span></div><div class="hits">Trigger days: ${hl||'â€”'}</div></div>`;
+    <div class="dates"><span>${fmt(s)}</span><span>${fmt(e)}</span></div><div class="hits">Trigger days: ${hl||'—'}</div></div>`;
 }
 function tabProg(c){
   const pj=c.progressions_json;const pp=pj?.points;
-  if(!pp)return '<div class="card"><div class="muted small">Progressions compute on the nightly refresh â€” or hit Refresh in Settings.</div></div>';
+  if(!pp)return '<div class="card"><div class="muted small">Progressions compute on the nightly refresh — or hit Refresh in Settings.</div></div>';
   const order=['sun','moon','mercury','venus','mars','ascendant','midheaven'];
   const rows=order.filter(k=>pp[k]).map(k=>{const p=pp[k];
     return `<div class="placerow" data-prog="${k}"><span class="g">${glyph[k]||''}</span>
-      <div class="pn">Prog. ${ptName(k)}</div><div class="pv"><b>${p.sign}</b> ${Math.round((p.position||0)*10)/10}Â°${p.natal_house?' Â· natal '+ord(p.natal_house):''}${p.retrograde?' Â· â„ž':''}</div></div>`;}).join('');
+      <div class="pn">Prog. ${ptName(k)}</div><div class="pv"><b>${p.sign}</b> ${Math.round((p.position||0)*10)/10}°${p.natal_house?' · natal '+ord(p.natal_house):''}${p.retrograde?' · ℞':''}</div></div>`;}).join('');
   const act=progActive(c);
-  const actHtml=act.length?act.map(x=>`<div class="collrow"><span class="g">${glyph[x.p]||''}${glyph[x.aspect]||''}${glyph[x.point]||ptGl(x.point)}</span> Prog. ${ptName(x.p)} ${x.aspect} natal ${ptName(x.point)} <span class="muted" style="font-size:11px;">${x.orb}Â°</span></div>`).join(''):'<div class="muted small" style="padding:4px 0;">No progressed aspects within 1.5Â° right now â€” her Inner World is between exact beats.</div>';
-  return `<div class="card"><div class="clab"><span class="ico">âš¡</span> Active now â€” progressed aspects (â‰¤1.5Â°)</div><div style="margin-top:6px;">${actHtml}</div></div>
-  <div class="card"><div class="clab"><span class="ico">â˜½</span> Inner World â€” secondary progressions Â· tap for the read</div>${rows}
-    <div class="small muted" style="margin-top:8px;">${esc(pj.method||'')} Â· computed ${pj.computed_at?fmt(new Date(pj.computed_at)):''}</div></div>`;
+  const actHtml=act.length?act.map(x=>`<div class="collrow"><span class="g">${glyph[x.p]||''}${glyph[x.aspect]||''}${glyph[x.point]||ptGl(x.point)}</span> Prog. ${ptName(x.p)} ${x.aspect} natal ${ptName(x.point)} <span class="muted" style="font-size:11px;">${x.orb}°</span></div>`).join(''):'<div class="muted small" style="padding:4px 0;">No progressed aspects within 1.5° right now — her Inner World is between exact beats.</div>';
+  return `<div class="card"><div class="clab"><span class="ico">⚡</span> Active now — progressed aspects (≤1.5°)</div><div style="margin-top:6px;">${actHtml}</div></div>
+  <div class="card"><div class="clab"><span class="ico">☽</span> Inner World — secondary progressions · tap for the read</div>${rows}
+    <div class="small muted" style="margin-top:8px;">${esc(pj.method||'')} · computed ${pj.computed_at?fmt(new Date(pj.computed_at)):''}</div></div>`;
 }
 function tabChat(c){
-  return `<div class="card"><div class="clab"><span class="ico">âœ¦</span> Ask Meridian about ${esc(c.name)}</div>
-    <div class="chatlog" id="chatlog"><div class="muted small" style="padding:6px 0;">Loadingâ€¦</div></div>
+  return `<div class="card"><div class="clab"><span class="ico">✦</span> Ask Meridian about ${esc(c.name)}</div>
+    <div class="chatlog" id="chatlog"><div class="muted small" style="padding:6px 0;">Loading…</div></div>
     <div class="chatbar"><textarea id="chatin" placeholder="e.g. what should we focus on this lunar month?"></textarea>
     <button class="btn" id="chatsend">Send</button></div></div>`;
 }
@@ -488,7 +488,7 @@ async function loadChat(){
 function renderChat(log){
   const el=document.getElementById('chatlog');if(!el)return;
   el.innerHTML=log.length?log.map(m=>`<div class="msg ${m.role}"><div class="bub">${m.role==='assistant'?mdHtml(m.content):esc(m.content)}</div></div>`).join(''):
-    `<div class="muted small" style="padding:6px 0;">Nothing yet â€” ask about her transits, returns, or what to build this month.</div>`;
+    `<div class="muted small" style="padding:6px 0;">Nothing yet — ask about her transits, returns, or what to build this month.</div>`;
   el.scrollTop=el.scrollHeight;
 }
 function defaultBiz(){return {rows:[{label:'Avg monthly revenue',value:''},{label:'Business model',value:''},{label:'Currently selling',value:''},{label:'Offer suite',value:''}],links:[]};}
@@ -496,19 +496,19 @@ function tabWork(c){
   const b=J(c.business_json)||defaultBiz();
   const rows=(b.rows||[]).map((r,i)=>`<div class="bizrow" data-bi="${i}">
     <input class="bl-in" data-bi="${i}" value="${esc(r.label)}" placeholder="Label" />
-    <textarea class="bv-in" data-bi="${i}" rows="1" placeholder="â€”">${esc(r.value)}</textarea>
-    <div class="bizmv"><button class="mv" data-mv="up" data-bi="${i}">â–²</button><button class="mv" data-mv="dn" data-bi="${i}">â–¼</button><button class="mv" data-mv="rm" data-bi="${i}">âœ•</button></div></div>`).join('');
-  const links=(b.links||[]).map((l,i)=>`<span class="linkchip"><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a><button class="mv" data-lrm="${i}">âœ•</button></span>`).join('');
-  return `<div class="card"><div class="clab"><span class="ico">âš‘</span> Business dashboard</div>
+    <textarea class="bv-in" data-bi="${i}" rows="1" placeholder="—">${esc(r.value)}</textarea>
+    <div class="bizmv"><button class="mv" data-mv="up" data-bi="${i}">▲</button><button class="mv" data-mv="dn" data-bi="${i}">▼</button><button class="mv" data-mv="rm" data-bi="${i}">✕</button></div></div>`).join('');
+  const links=(b.links||[]).map((l,i)=>`<span class="linkchip"><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a><button class="mv" data-lrm="${i}">✕</button></span>`).join('');
+  return `<div class="card"><div class="clab"><span class="ico">⚑</span> Business dashboard</div>
     <div id="bizrows" style="margin-top:9px;">${rows}</div>
     <div class="btnrow"><button class="btn2" id="bizadd">+ Add row</button><button class="btn" id="bizsave">Save dashboard</button></div>
-    <div class="clab" style="margin-top:16px;">Links â€” Instagram Â· site Â· docs</div>
-    <div style="margin-top:8px;" id="bizlinks">${links||'<span class="muted small">No links yet â€” add her Instagram, website, Google Docs below.</span>'}</div>
-    <div class="btnrow"><input id="linklabel" placeholder="Label (e.g. Instagram)" style="flex:1;min-width:110px;" /><input id="linkurl" placeholder="https://â€¦" style="flex:2;min-width:150px;" /><button class="btn2" id="linkadd">+ Add link</button></div></div>
-  <div class="card"><div class="clab"><span class="ico">âœŽ</span> What we're building <span class="saved" id="wksaved">Saved</span></div>
+    <div class="clab" style="margin-top:16px;">Links — Instagram · site · docs</div>
+    <div style="margin-top:8px;" id="bizlinks">${links||'<span class="muted small">No links yet — add her Instagram, website, Google Docs below.</span>'}</div>
+    <div class="btnrow"><input id="linklabel" placeholder="Label (e.g. Instagram)" style="flex:1;min-width:110px;" /><input id="linkurl" placeholder="https://…" style="flex:2;min-width:150px;" /><button class="btn2" id="linkadd">+ Add link</button></div></div>
+  <div class="card"><div class="clab"><span class="ico">✎</span> What we're building <span class="saved" id="wksaved">Saved</span></div>
     <textarea id="wktext" style="margin-top:9px;min-height:120px;">${esc(c.current_work||'')}</textarea>
     <div class="btnrow"><button class="btn" id="wksave">Save</button></div>
-    ${c.work_summary?`<div class="auto"><div class="al">Auto summary Â· ${c.work_summary_updated_at?fmt(new Date(c.work_summary_updated_at)):''}</div><div class="at">${esc(c.work_summary)}</div></div>`:''}</div>`;
+    ${c.work_summary?`<div class="auto"><div class="al">Auto summary · ${c.work_summary_updated_at?fmt(new Date(c.work_summary_updated_at)):''}</div><div class="at">${esc(c.work_summary)}</div></div>`:''}</div>`;
 }
 function collectBiz(){
   const cur=J(CUR.business_json)||defaultBiz();
@@ -520,25 +520,25 @@ async function saveBiz(b){
   const {data,error}=await sb.from('private_clients').update({business_json:b,updated_at:new Date().toISOString()}).eq('id',CUR.id).select('business_json').single();
   if(error){toast('Save failed: '+error.message);return;}
   CUR.business_json=data.business_json;const i=DATA.findIndex(x=>x.id===CUR.id);if(i>=0)DATA[i]=CUR;
-  renderClient();toast('Dashboard saved âœ“');
+  renderClient();toast('Dashboard saved ✓');
 }
 async function saveWork(){
   const v=document.getElementById('wktext').value;
   const {data,error}=await sb.from('private_clients').update({current_work:v,updated_at:new Date().toISOString()}).eq('id',CUR.id).select('current_work').single();
   if(error){toast('Save failed: '+error.message);return;}
-  if((data&&data.current_work||'')!==v){toast('Save did not persist â€” try once more');return;}
+  if((data&&data.current_work||'')!==v){toast('Save did not persist — try once more');return;}
   CUR.current_work=v;const i=DATA.findIndex(x=>x.id===CUR.id);if(i>=0)DATA[i]=CUR;
   const s=document.getElementById('wksaved');if(s){s.classList.add('on');setTimeout(()=>s.classList.remove('on'),1600);}
-  toast('Saved âœ“');
+  toast('Saved ✓');
 }
 function sheet(html){document.getElementById('sheet').innerHTML=html;document.getElementById('overlay').classList.add('show');document.body.style.overflow='hidden';}
 window.closeSheet=()=>{document.getElementById('overlay').classList.remove('show');document.body.style.overflow='';};
-function sheetTop(who,title,sub){return `<div class="sheet-top"><div><div class="who">${esc(who)}</div><h2>${title}</h2><div class="sub">${esc(sub||'')}</div></div><button class="closex" onclick="closeSheet()">âœ•</button></div>`;}
+function sheetTop(who,title,sub){return `<div class="sheet-top"><div><div class="who">${esc(who)}</div><h2>${title}</h2><div class="sub">${esc(sub||'')}</div></div><button class="closex" onclick="closeSheet()">✕</button></div>`;}
 async function readInto(elId,action,payload){
   const el=document.getElementById(elId);if(!el)return;
-  el.style.display='block';el.innerHTML='<span class="muted">Reading the chartâ€¦</span>';
+  el.style.display='block';el.innerHTML='<span class="muted">Reading the chart…</span>';
   const r=await api(action,payload);
-  el.innerHTML=r.need_key?'<span class="muted">Add your Anthropic key in Settings (âš™ï¸Ž on the home screen) to turn on AI reads.</span>':(r.error?'<span class="muted">'+esc(r.error)+'</span>':mdHtml(r.content));
+  el.innerHTML=r.need_key?'<span class="muted">Add your Anthropic key in Settings (⚙︎ on the home screen) to turn on AI reads.</span>':(r.error?'<span class="muted">'+esc(r.error)+'</span>':mdHtml(r.content));
 }
 window.readInto=readInto;
 function openTransitSheet(c,tk){
@@ -551,114 +551,114 @@ function openTransitSheet(c,tk){
   let move='';
   const nh=n.planets?.[pt]?.house||({ascendant:1,midheaven:10,ic:4,descendant:7}[pt]);
   if(SKYPOS&&SKYPOS[p]&&ex.houses&&ex.houses.length){const th=houseOfLonJS(SKYPOS[p].abs_pos,ex.houses);
-    move=`<div class="baserow" style="margin-top:10px;"><div class="bl">The movement</div><div class="bv"><b>${pl(p)}</b> is moving through her ${ord(th)} <span class="mut">â€” ${HMs[th]}</span><br>hitting natal <b>${ptName(pt)}</b>${nh?` in her ${ord(nh)} <span class="mut">â€” ${HMs[nh]}</span>`:''}</div></div>`;}
+    move=`<div class="baserow" style="margin-top:10px;"><div class="bl">The movement</div><div class="bv"><b>${pl(p)}</b> is moving through her ${ord(th)} <span class="mut">— ${HMs[th]}</span><br>hitting natal <b>${ptName(pt)}</b>${nh?` in her ${ord(nh)} <span class="mut">— ${HMs[nh]}</span>`:''}</div></div>`;}
   const rules=(ex.houses||[]).filter(h=>RUL[h.sign]===pt).map(h=>h.house);
   const pa=(ex.aspects||[]).filter(x=>x.a===pt||x.b===pt).map(x=>`${glyph[x.aspect]||x.aspect} ${ptName(x.a===pt?x.b:x.a)}`);
   const life=(rules.length||pa.length)?`<div style="margin-top:12px;background:var(--paper2);border:1px solid var(--line2);border-radius:6px;padding:12px 14px;">
-    <div class="clab"><span class="ico">âˆž</span> Lifetime pattern â€” what this transit presses on</div>
-    <div class="small" style="margin-top:7px;line-height:1.65;"><b>${ptName(pt)}</b>${rules.length?` rules her <b>${rules.map(ord).join(' & ')}</b> <span class="muted">(${rules.map(h=>HMs[h]).join('; ')})</span>`:''}${nh?`${rules.length?' and':''} sits in her <b>${ord(nh)}</b>`:''}.${pa.length?`<br>Natal wiring: ${pa.join(' &nbsp;Â·&nbsp; ')}.`:''}</div></div>`:'';
-  sheet(sheetTop(c.name+' Â· Transit',esc(t?.label||pl(p)+' '+a+' '+ptName(pt)),trigNow?('âš¡ Triggered by '+pl(trigNow.fast)+' today'):'The deep dive â€” themes in Meridian voice')+
+    <div class="clab"><span class="ico">∞</span> Lifetime pattern — what this transit presses on</div>
+    <div class="small" style="margin-top:7px;line-height:1.65;"><b>${ptName(pt)}</b>${rules.length?` rules her <b>${rules.map(ord).join(' & ')}</b> <span class="muted">(${rules.map(h=>HMs[h]).join('; ')})</span>`:''}${nh?`${rules.length?' and':''} sits in her <b>${ord(nh)}</b>`:''}.${pa.length?`<br>Natal wiring: ${pa.join(' &nbsp;·&nbsp; ')}.`:''}</div></div>`:'';
+  sheet(sheetTop(c.name+' · Transit',esc(t?.label||pl(p)+' '+a+' '+ptName(pt)),trigNow?('⚡ Triggered by '+pl(trigNow.fast)+' today'):'The deep dive — themes in Meridian voice')+
     `<div class="sheet-body">${t?timeline(t):''}
     ${move}
-    <div id="trigdays" class="small muted" style="margin-top:10px;">Loading trigger daysâ€¦</div>
+    <div id="trigdays" class="small muted" style="margin-top:10px;">Loading trigger days…</div>
     ${life}
     <div class="readout" id="ro-trans" style="display:none;"></div></div>`);
   readInto('ro-trans','transit_deep_dive',{client_id:c.id,tkey:tk});
   api('transit_triggers',{client_id:c.id,tkey:tk}).then(r=>{
     const el=document.getElementById('trigdays');if(!el)return;
     const list=r.triggers||[];
-    el.innerHTML=list.length?`<span class="lab" style="font-size:8.5px;">Trigger days â€” fast planets striking ${ptName(pt)}</span><div style="margin-top:5px;line-height:2;">`+list.map(x=>{const now=x.date===todayISO;return `<span style="display:inline-block;margin-right:13px;${now?'color:var(--accent);font-weight:bold;':''}">${glyph[x.fast]||''}${glyph[x.aspect]||''} <b>${fmt(D(x.date))}</b>${now?' Â· today':''}</span>`;}).join('')+'</div>'
+    el.innerHTML=list.length?`<span class="lab" style="font-size:8.5px;">Trigger days — fast planets striking ${ptName(pt)}</span><div style="margin-top:5px;line-height:2;">`+list.map(x=>{const now=x.date===todayISO;return `<span style="display:inline-block;margin-right:13px;${now?'color:var(--accent);font-weight:bold;':''}">${glyph[x.fast]||''}${glyph[x.aspect]||''} <b>${fmt(D(x.date))}</b>${now?' · today':''}</span>`;}).join('')+'</div>'
       :'<span class="muted">No fast-planet trigger days before this transit completes.</span>';
   }).catch(()=>{const el=document.getElementById('trigdays');if(el)el.innerHTML='';});
 }
 function openPlacementSheet(c,k){
   const n=J(c.natal_json);const p=n.planets[k];
-  sheet(sheetTop(c.name+' Â· Birth Chart',`${glyph[k]||''} ${ptName(k)} ${p?'in '+p.sign:''}`,p?`${p.deg}Â° Â· ${ord(p.house)} house â€” ${HMs[p.house]||''}`:'')+
-    `<div class="sheet-body"><div class="readout" id="ro-place"><span class="muted">Reading the chartâ€¦</span></div></div>`);
+  sheet(sheetTop(c.name+' · Birth Chart',`${glyph[k]||''} ${ptName(k)} ${p?'in '+p.sign:''}`,p?`${p.deg}° · ${ord(p.house)} house — ${HMs[p.house]||''}`:'')+
+    `<div class="sheet-body"><div class="readout" id="ro-place"><span class="muted">Reading the chart…</span></div></div>`);
   readInto('ro-place','placement_read',{client_id:c.id,point:k});
 }
 function openProgSheet(c,k){
   const pp=c.progressions_json?.points?.[k];
-  sheet(sheetTop(c.name+' Â· Inner World',`Prog. ${ptName(k)} in ${pp?.sign||''}`,pp?.natal_house?`moving through her natal ${ord(pp.natal_house)} house â€” ${HMs[pp.natal_house]||''}`:'solar arc')+
-    `<div class="sheet-body"><div class="readout" id="ro-prog"><span class="muted">Reading the chartâ€¦</span></div></div>`);
+  sheet(sheetTop(c.name+' · Inner World',`Prog. ${ptName(k)} in ${pp?.sign||''}`,pp?.natal_house?`moving through her natal ${ord(pp.natal_house)} house — ${HMs[pp.natal_house]||''}`:'solar arc')+
+    `<div class="sheet-body"><div class="readout" id="ro-prog"><span class="muted">Reading the chart…</span></div></div>`);
   readInto('ro-prog','progression_read',{client_id:c.id,pkey:k});
 }
 function openDraftSheet(c){
-  sheet(sheetTop(c.name,'âœ‰ Message draft','Her lunar month + location confirm â€” copy, then send it yourself')+
-    `<div class="sheet-body"><div class="readout" id="ro-draft"><span class="muted">Drafting in your voiceâ€¦</span></div>
+  sheet(sheetTop(c.name,'✉ Message draft','Her lunar month + location confirm — copy, then send it yourself')+
+    `<div class="sheet-body"><div class="readout" id="ro-draft"><span class="muted">Drafting in your voice…</span></div>
     <div class="btnrow"><button class="btn" id="copydraft">Copy to clipboard</button></div></div>`);
   api('draft_message',{client_id:c.id}).then(r=>{
     const el=document.getElementById('ro-draft');if(!el)return;
     el.dataset.raw=r.content||'';
     el.innerHTML=r.need_key?'<span class="muted">Add your Anthropic key in Settings first.</span>':(r.error?esc(r.error):mdHtml(r.content));
   });
-  document.getElementById('copydraft').onclick=()=>{const raw=document.getElementById('ro-draft')?.dataset.raw||'';navigator.clipboard.writeText(raw).then(()=>toast('Copied â€” paste into Telegram/email'));};
+  document.getElementById('copydraft').onclick=()=>{const raw=document.getElementById('ro-draft')?.dataset.raw||'';navigator.clipboard.writeText(raw).then(()=>toast('Copied — paste into Telegram/email'));};
 }
 function openLocSheet(c,rkey){
   const titles={sr:'Solar Return',lrc:'Current Lunar Return',lrn:'Next Lunar Return'};
-  sheet(sheetTop(c.name,'âœŽ '+titles[rkey]+' location','Where is she for this cycle? The chart recasts there.')+
-    `<div class="sheet-body"><div style="display:flex;gap:8px;"><input id="geoq" placeholder="City â€” e.g. Denver" autocomplete="off" style="flex:1;" /><button class="btn" id="geogo">Search</button></div>
-    <div id="geores"></div><div class="small muted" style="margin-top:10px;">Type the city, hit Search, pick the match â€” the ${rkey==='sr'?'year':'month'} recasts once at those coordinates.</div></div>`);
+  sheet(sheetTop(c.name,'✎ '+titles[rkey]+' location','Where is she for this cycle? The chart recasts there.')+
+    `<div class="sheet-body"><div style="display:flex;gap:8px;"><input id="geoq" placeholder="City — e.g. Denver" autocomplete="off" style="flex:1;" /><button class="btn" id="geogo">Search</button></div>
+    <div id="geores"></div><div class="small muted" style="margin-top:10px;">Type the city, hit Search, pick the match — the ${rkey==='sr'?'year':'month'} recasts once at those coordinates.</div></div>`);
   const q=document.getElementById('geoq');q.focus();
   const go=async()=>{
     const v=q.value.trim();if(v.length<2)return;
-    document.getElementById('geores').innerHTML='<div class="muted small" style="margin-top:8px;">Searchingâ€¦</div>';
+    document.getElementById('geores').innerHTML='<div class="muted small" style="margin-top:8px;">Searching…</div>';
     const r=await fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(v)+'&count=5&language=en&format=json').then(x=>x.json()).catch(()=>null);
     document.getElementById('geores').innerHTML=(r?.results||[]).map((g,i)=>
       `<div class="georow" data-geo='${esc(JSON.stringify({label:g.name+(g.admin1?', '+g.admin1:'')+', '+g.country, city:g.name, nation:g.country_code, lat:g.latitude, lng:g.longitude, tz:g.timezone}))}' data-rk="${rkey}">
-        ${esc(g.name)}${g.admin1?', '+esc(g.admin1):''} <span class="mut">Â· ${esc(g.country)} Â· ${esc(g.timezone)}</span></div>`).join('')||'<div class="muted small" style="margin-top:8px;">No matches.</div>';
+        ${esc(g.name)}${g.admin1?', '+esc(g.admin1):''} <span class="mut">· ${esc(g.country)} · ${esc(g.timezone)}</span></div>`).join('')||'<div class="muted small" style="margin-top:8px;">No matches.</div>';
   };
   q.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();go();}};
   setTimeout(()=>{const b=document.getElementById('geogo');if(b)b.onclick=go;},0);
 }
 async function recompute(rkey,loc){
-  closeSheet();toast('Recasting at '+loc.label+'â€¦');
+  closeSheet();toast('Recasting at '+loc.label+'…');
   const r=await api('recompute_return',{client_id:CUR.id,rkey,location:loc});
   if(r.error){toast('Failed: '+r.error);return;}
   const {data}=await sb.from('private_clients').select('*').eq('id',CUR.id).single();
-  if(data){CUR=data;const i=DATA.findIndex(x=>x.id===data.id);if(i>=0)DATA[i]=data;renderClient();toast('Recast at '+loc.label+' âœ“');}
+  if(data){CUR=data;const i=DATA.findIndex(x=>x.id===data.id);if(i>=0)DATA[i]=data;renderClient();toast('Recast at '+loc.label+' ✓');}
 }
 async function openFullChart(){
-  toast('Drawing the chartâ€¦');
+  toast('Drawing the chart…');
   const r=await api('chart_svg',{client_id:CUR.id});
   if(r.error){toast(r.error);return;}
   const w=window.open('','_blank');
-  if(w){w.document.write('<html><head><title>'+esc(CUR.name)+' â€” Birth Chart</title></head><body style="margin:0;background:#f3ede1;display:grid;place-items:center;min-height:100vh;">'+r.svg+'</body></html>');w.document.close();}
+  if(w){w.document.write('<html><head><title>'+esc(CUR.name)+' — Birth Chart</title></head><body style="margin:0;background:#f3ede1;display:grid;place-items:center;min-height:100vh;">'+r.svg+'</body></html>');w.document.close();}
 }
 window.openSettings=async()=>{
-  sheet(sheetTop('MERIDIAN Â· BUILD','âš™ï¸Ž Settings','Keys, status, refresh')+
+  sheet(sheetTop('MERIDIAN · BUILD','⚙︎ Settings','Keys, status, refresh')+
     `<div class="sheet-body">
       <div class="clab" style="margin-bottom:6px;">Anthropic API key</div>
-      <input id="akey" type="password" placeholder="sk-ant-â€¦" />
+      <input id="akey" type="password" placeholder="sk-ant-…" />
       <div class="btnrow"><button class="btn" id="savekey">Save & test key</button></div>
       <div class="clab" style="margin:16px 0 6px;">Status</div>
-      <div class="statgrid" id="statgrid"><div class="stat"><div class="sv">â€¦</div></div></div>
+      <div class="statgrid" id="statgrid"><div class="stat"><div class="sv">…</div></div></div>
       <div class="clab" style="margin:16px 0 6px;">Change password</div>
       <input id="npass" type="password" placeholder="New password" />
       <div class="btnrow"><button class="btn2" id="savepass">Update password</button></div>
       <div class="btnrow" style="margin-top:18px;">
-        <button class="btn2" id="refreshnow">â†» Refresh all data now</button>
+        <button class="btn2" id="refreshnow">↻ Refresh all data now</button>
         <button class="btn2" id="signout">Sign out</button>
       </div></div>`);
   const r=await api('health');
   document.getElementById('statgrid').innerHTML=`
     <div class="stat"><div class="clab">Astro server</div><div class="sv" style="color:${r.astro?'var(--live)':'var(--accent)'}">${r.astro?'Connected':'Unreachable'}</div></div>
     <div class="stat"><div class="clab">Anthropic key</div><div class="sv" style="color:${r.anthropic_key?'var(--live)':'var(--accent)'}">${r.anthropic_key?'Configured':'Not set'}</div></div>
-    <div class="stat"><div class="clab">Clients</div><div class="sv">${r.clients??'â€”'}</div></div>
+    <div class="stat"><div class="clab">Clients</div><div class="sv">${r.clients??'—'}</div></div>
     <div class="stat"><div class="clab">Sky cache</div><div class="sv">${r.collective_cached?'Fresh today':'Will fetch'}</div></div>`;
   document.getElementById('savekey').onclick=async(e)=>{
     e.target.disabled=true;
     const r2=await api('setup_key',{anthropic_api_key:document.getElementById('akey').value.trim()});
     e.target.disabled=false;
-    if(r2.ok){toast('Key saved â€” AI is on âœ“');closeSheet();loadEnergy();}else toast(r2.error||'Failed');
+    if(r2.ok){toast('Key saved — AI is on ✓');closeSheet();loadEnergy();}else toast(r2.error||'Failed');
   };
   document.getElementById('savepass').onclick=async()=>{
     const {error}=await sb.auth.updateUser({password:document.getElementById('npass').value});
-    toast(error?error.message:'Password updated âœ“');
+    toast(error?error.message:'Password updated ✓');
   };
   document.getElementById('refreshnow').onclick=async(e)=>{
-    e.target.disabled=true;toast('Refreshing all clientsâ€¦');
-    await api('refresh_daily');e.target.disabled=false;toast('Refreshed âœ“');
+    e.target.disabled=true;toast('Refreshing all clients…');
+    await api('refresh_daily');e.target.disabled=false;toast('Refreshed ✓');
     const {data}=await sb.from('private_clients').select('*').order('name');if(data){DATA=data;if(CUR)CUR=DATA.find(x=>x.id===CUR.id)||CUR;}
     closeSheet();
   };
@@ -700,9 +700,9 @@ document.addEventListener('input',e=>{
 async function sendChat(){
   const ta=document.getElementById('chatin');const q=(ta?.value||'').trim();if(!q)return;ta.value='';
   const {data:log}=await sb.from('coach_chat_messages').select('role,content').eq('client_id',CUR.id).order('created_at',{ascending:true}).limit(80);
-  renderChat([...(log||[]),{role:'user',content:q},{role:'assistant',content:'â€¦'}]);
+  renderChat([...(log||[]),{role:'user',content:q},{role:'assistant',content:'…'}]);
   const r=await api('chat',{client_id:CUR.id,message:q});
-  if(r.need_key){renderChat([...(log||[]),{role:'user',content:q},{role:'assistant',content:'Add your Anthropic key in Settings (âš™ï¸Ž) and ask me again.'}]);return;}
+  if(r.need_key){renderChat([...(log||[]),{role:'user',content:q},{role:'assistant',content:'Add your Anthropic key in Settings (⚙︎) and ask me again.'}]);return;}
   loadChat();
 }
 </script>
